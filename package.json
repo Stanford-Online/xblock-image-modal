@@ -1,0 +1,33 @@
+{
+  "name": "xblock-factory",
+  "title": "XBlock Factory",
+  "description": "A template for production-ready XBlocks.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Stanford-Online/xblock-factory",
+  "author": {
+    "name": "stv",
+    "url": "https://github.com/stvstnfrd"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Stanford-Online/xblock-factory"
+  },
+  "bugs": {
+    "url": "https://github.com/Stanford-Online/xblock-factory/issues"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-init": "^0.3.2",
+    "grunt-contrib-jshint": "^0.10.0"
+  },
+  "keywords": [
+    "stanford",
+    "openedx",
+    "xblock",
+    "edx"
+  ]
+}

@@ -1,0 +1,1 @@
+from .{%= namePackage %} import {%= nameClass %}
