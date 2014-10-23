@@ -10,6 +10,11 @@ from xblock.fields import Scope
 from xblock.fields import String
 from xblock.fragment import Fragment
 
+DEFAULT_FIELDS = [
+    'parent',
+    'tags',
+]
+
 
 class ImageModal(XBlock):
     """
@@ -25,15 +30,30 @@ class ImageModal(XBlock):
             ('Image Modal XBlock',
              """<sequence_demo>
                     <imagemodal />
-                    <imagemodal name="My First XBlock" />
+                    <imagemodal
+                        display_name="Image Modal With Thumbnail"
+                        thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
+                    />
                 </sequence_demo>
              """),
         ]
 
-    name = String(
+    display_name = String(
         default='Image Modal XBlock',
         scope=Scope.settings,
-        help="This is the XBlock's name",
+        help="This is the XBlock's display name",
+    )
+
+    image_url = String(
+        default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
+        scope=Scope.settings,
+        help='This is the location of the full-screen image to be displayed.',
+    )
+
+    thumbnail_url = String(
+        default='',
+        scope=Scope.settings,
+        help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
     )
 
     def student_view(self, context=None):
@@ -42,9 +62,22 @@ class ImageModal(XBlock):
         """
         fragment = self.build_fragment(
             path_html='view.html',
-            path_css='view.less.min.css',
-            path_js='view.js.min.js',
+            paths_css=[
+                'view.less.min.css',
+            ],
+            paths_js=[
+                'draggabilly.js.min.js',
+                'view.js.min.js',
+            ],
+            urls_css=[
+                '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
+            ],
             fragment_js='ImageModalView',
+            context={
+                'display_name': self.display_name,
+                'image_url': self.image_url,
+                'thumbnail_url': self.thumbnail_url or self.image_url,
+            },
         )
         return fragment
 
@@ -56,8 +89,12 @@ class ImageModal(XBlock):
         """
         fragment = self.build_fragment(
             path_html='edit.html',
-            path_css='edit.less.min.css',
-            path_js='edit.js.min.js',
+            paths_css=[
+                'edit.less.min.css',
+            ],
+            paths_js=[
+                'edit.js.min.js',
+            ],
             fragment_js='ImageModalEdit',
         )
         return fragment
@@ -70,10 +107,13 @@ class ImageModal(XBlock):
         Returns: the new field values
         """
 
-        # TODO: Add an entry here for each field.
-        self.name = data['name']
+        self.display_name = data['display_name']
+        self.image_url = data['image_url']
+        self.thumbnail_url = data['thumbnail_url']
         return {
-            'name': self.name,
+            'display_name': self.display_name,
+            'image_url': self.image_url,
+            'thumbnail_url': self.thumbnail_url,
         }
 
     def get_resource_string(self, path):
@@ -94,24 +134,37 @@ class ImageModal(XBlock):
 
     def build_fragment(self,
         path_html='',
-        path_css=None,
-        path_js=None,
-        fragment_js=None
+        paths_css=[],
+        paths_js=[],
+        urls_css=[],
+        urls_js=[],
+        fragment_js=None,
+        context=None,
     ):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
         """
+        # If no context is provided, convert self.fields into a dict
+        context = context or {
+            key: getattr(self, key)
+                for key in self.fields
+                    if key not in DEFAULT_FIELDS
+        }
         html_source = self.get_resource_string(path_html)
         html_source = html_source.format(
-            self=self,
+            **context
         )
         fragment = Fragment(html_source)
-        if path_css:
-            css_url = self.get_resource_url(path_css)
-            fragment.add_css_url(css_url)
-        if path_js:
-            js_url = self.get_resource_url(path_js)
-            fragment.add_javascript_url(js_url)
+        for path in paths_css:
+            url = self.get_resource_url(path)
+            fragment.add_css_url(url)
+        for path in paths_js:
+            url = self.get_resource_url(path)
+            fragment.add_javascript_url(url)
+        for url in urls_css:
+            fragment.add_css_url(url)
+        for url in urls_js:
+            fragment.add_javascript_url(url)
         if fragment_js:
             fragment.initialize_js(fragment_js)
         return fragment

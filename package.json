@@ -1,5 +1,5 @@
 {
-  "name": "image-modal",
+  "name": "xblock-image-modal",
   "title": "Image Modal XBlock",
   "description": "A fullscreen image modal XBlock.",
   "version": "0.1.0",

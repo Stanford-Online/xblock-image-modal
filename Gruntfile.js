@@ -60,6 +60,10 @@ module.exports = function (grunt) {
                     },
                 ],
             },
+            vendor: {
+                src: directoryPrivate + '/draggabilly.pkgd.js',
+                dest: directoryPublic + '/draggabilly.pkgd.js',
+            },
         },
         csslint: {
             dist: {
@@ -102,6 +106,7 @@ module.exports = function (grunt) {
         jshint: {
             options: {
                 ignores: [
+                    directoryPrivate + '/**/draggabilly.pkgd.js',
                 ],
             },
             dist: [
@@ -184,11 +189,11 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jshint',
-        'csslint',
         'concat',
         'copy',
-        'uglify',
         'less',
+        'csslint',
+        'uglify',
         'htmlmin',
     ]);
 };

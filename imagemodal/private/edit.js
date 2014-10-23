@@ -20,8 +20,9 @@ function ImageModalEdit(runtime, element) {
         $.ajax(url, {
             type: 'POST',
             data: JSON.stringify({
-                // TODO: Add entries here for each field to be saved
-                'name': $('#xblock_imagemodal_name').val(),
+                'display_name': $('#xblock_imagemodal_display_name').val(),
+                'image_url': $('#xblock_imagemodal_image_url').val(),
+                'thumbnail_url': $('#xblock_imagemodal_thumbnail_url').val(),
             }),
             success: function buttonSaveOnSuccess() {
                 runtime.notify('save', {
