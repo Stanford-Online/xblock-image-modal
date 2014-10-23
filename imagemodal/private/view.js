@@ -1,4 +1,4 @@
-function {%= nameClass %}View(runtime, element) {
+function ImageModalView(runtime, element) {
     'use strict';
 
     var $ = window.jQuery;

@@ -1,25 +1,33 @@
-# XBlock Factory
+# Image Modal XBlock
+A fullscreen image modal XBlock.
 
-## Setup:
-1. [Fork this repo in Github.](https://github.com/Stanford-Online/xblock-factory/fork)
-2. Rename your new repo in Github.
-3. Clone your repo.
-    - `git clone ${YOUR_PROJECT_REPO} ${YOUR_PROJECT_PATH}`
-4. Enter your project directory.
-    - `cd ${YOUR_PROJECT_PATH}`
-5. Run the bootstrap script.
-    - `./bootstrap.sh`
-
-## Develop
-1. Run the `watch` task.
-    - `grunt watch`
-2. Edit files.
-    - Note: you should only edit static files (HTML, CSS, JS) inside of
-      the `private/` directory and _not_ the copies inside `public/`.
-    - The `public/` directory is recreated and overwritten automatically
-      by `grunt`, which compiles and minifies static content.
-    - While `grunt watch` will update files automatically when they
-      change, you can manually build/lint your project by invoking the
-      build task with `grunt`.
-3. ???
-4. Profit!
+## TODO List:
+- [ ] Write tests
+- [ ] Update the `student_view`
+    - [ ] `./imagemodal/private/view.html`
+        - Add content to `<div class="imagemodal_block"></div>` element
+    - [ ] `./imagemodal/private/view.js`
+        - Add logic to `ImageModalView` function
+    - [ ] `./imagemodal/private/view.less`
+        - Add styles to `.imagemodal_block { }` block
+    - [ ] `./imagemodal/imagemodal.py`
+        - Add back-end logic to `student_view` method
+- [ ] Update the `studio_view`
+    - [ ] `./imagemodal/private/edit.html`
+        - Add `<LI>` entries to `<ul class="list-input settings-list">` for each new field
+    - [ ] `./imagemodal/private/edit.js`
+        - Add entry for each field to `ImageModalEdit
+    - [ ] `./imagemodal/private/edit.less`
+        - Add styles to `.imagemodal_edit { }` block (if needed)
+    - [ ] `./imagemodal/imagemodal.py`
+        - Add entry for each field to ``
+- [ ] Update package metadata
+    - [ ] `./package.json`
+        - https://www.npmjs.org/doc/files/package.json.html
+    - [ ] `./setup.py`
+        - https://docs.python.org/2/distutils/setupscript.html#additional-meta-data
+- [ ] Update `./Gruntfile.js`
+    - http://gruntjs.com/getting-started
+- [ ] Update `./README.markdown`
+- [ ] Write documentation
+- [ ] Publish on PyPi

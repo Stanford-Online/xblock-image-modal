@@ -15,21 +15,21 @@ setuptools.setup(
     url=package_json.get('homepage'),
     license='AGPL-3.0',
     packages=[
-        '{%= namePackage %}',
+        'imagemodal',
     ],
     install_requires=[
         'XBlock',
     ],
     entry_points={
         'xblock.v1': [
-            '{%= namePackage %} = {%= namePackage %}:{%= nameClass %}',
+            'imagemodal = imagemodal:ImageModal',
         ],
     },
     package_dir={
-        '{%= namePackage %}': '{%= namePackage %}',
+        'imagemodal': 'imagemodal',
     },
     package_data={
-        "{%= namePackage %}": [
+        "imagemodal": [
             'public/*',
         ],
     },
