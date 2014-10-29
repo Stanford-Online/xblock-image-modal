@@ -1,0 +1,107 @@
+.imagemodal_block {
+    @dark: #2e2d29;
+    @light: #fbfbf9;
+
+    P {
+        cursor: pointer;
+    }
+
+    IMG {
+        max-width: 100%;
+    }
+
+    A,
+    BUTTON {
+        cursor: pointer;
+    }
+
+    BUTTON {
+        border: 2px solid @dark;
+        background: @light;
+        color: @dark;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.9;
+        padding: 5px 7px 7px;
+        font-weight: bold;
+        font-size: 1em;
+
+        I {
+            // Override Studio's italic style
+            font-style: normal;
+        }
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .zoom {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .fullscreen {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .wrapper {
+        position: relative;
+    }
+
+    .count {
+        font-weight: bold;
+    }
+
+    .curtain {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: #000;
+        background-color: rgba(0, 0, 0, 0.7);
+        cursor: no-drop;
+
+        // Override LMS's sequence nav (z-index: 99;)
+        z-index: 100;
+
+        .mask {
+            height: 95%;
+            width: 95%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            top: 2.5%;
+
+            .wrapper {
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                position: relative;
+
+                IMG {
+                    display: block;
+                    margin: auto;
+                    max-height: 100%;
+                    max-width: 100%;
+                    position: relative;
+                    cursor: zoom-in;
+                }
+
+                .zoomed {
+                    max-height: none;
+                    max-width: none;
+                    cursor: move;
+                }
+            }
+        }
+    }
+}
