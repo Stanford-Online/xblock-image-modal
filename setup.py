@@ -1,11 +1,11 @@
 import json
-import setuptools
+from setuptools import setup
 
 
-package_json_file = open('package.json', 'r')
+package_json_file = open('imagemodal/package.json', 'r')
 package_json = json.load(package_json_file)
 
-setuptools.setup(
+setup(
     name=package_json.get('name', 'xblock-test'),
     version=package_json.get('version', '0.1.0'),
     description=package_json.get('description'),
@@ -29,6 +29,9 @@ setuptools.setup(
         'imagemodal': 'imagemodal',
     },
     package_data={
+        '': [
+            'package.json',
+        ],
         "imagemodal": [
             'public/*',
         ],
