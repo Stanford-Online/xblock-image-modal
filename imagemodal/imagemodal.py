@@ -6,6 +6,7 @@ import os
 import pkg_resources
 
 from xblock.core import XBlock
+from xblock.fields import Boolean
 from xblock.fields import Scope
 from xblock.fields import String
 from xblock.fragment import Fragment
@@ -42,19 +43,71 @@ class ImageModal(XBlock):
         default='Image Modal XBlock',
         scope=Scope.settings,
         help="This is the XBlock's display name",
+        display_name="Display Name",
     )
 
     image_url = String(
         default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
         scope=Scope.settings,
         help='This is the location of the full-screen image to be displayed.',
+        display_name="Image URL",
     )
 
     thumbnail_url = String(
         default='',
         scope=Scope.settings,
         help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
+        display_name="Thumbnail URL",
     )
+
+    should_enable_preview = Boolean(
+        default=False,
+        scope=Scope.settings,
+        help='Control whether or not the preview is interactive in Studio',
+        display_name='Enable Preview in Studio?',
+    )
+
+    @property
+    def editor_tabs(self):
+        return [
+            {
+                "display_name": "Settings",
+                "id": "settings",
+            },
+            {
+                "display_name": "About",
+                "id": "about",
+            },
+        ]
+
+    def about_tab_view(self, context=None):
+        fragment = Fragment(u"""
+            <h1>About This XBlock</h1>
+            <div>
+                The default Studio View was created at the OpenEdX
+                Hackathon (November 2014) by:
+                <ul>
+                    <li>
+                        <a href="https://github.com/stvstnfrd" target="_blank">Steven Burch</a>
+                        (<a href="https://github.com/Stanford-Online" target="_blank">Stanford</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/stephensanchez" target="_blank">Stephen Sanchez</a>
+                        (<a href="https://github.com/edx">edX</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/cahrens">Christina Roberts</a>
+                        (<a href="https://github.com/edx">edX</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/andy-armstrong">Andy Armstrong</a> (<a href="https://github.com/edx">edX</a>)</li>
+                </ul>
+            </div>
+            <div>
+                This XBlock was created by stv at Stanford.
+            </div>
+        """)
+        return fragment
 
     def student_view(self, context=None):
         """
@@ -77,44 +130,10 @@ class ImageModal(XBlock):
                 'display_name': self.display_name,
                 'image_url': self.image_url,
                 'thumbnail_url': self.thumbnail_url or self.image_url,
+                'should_enable_preview': self.should_enable_preview and 'True' or '',
             },
         )
         return fragment
-
-    def studio_view(self, context=None):
-        """
-        Build the fragment for the edit/studio view
-
-        Implementation is optional.
-        """
-        fragment = self.build_fragment(
-            path_html='edit.html',
-            paths_css=[
-                'edit.less.min.css',
-            ],
-            paths_js=[
-                'edit.js.min.js',
-            ],
-            fragment_js='ImageModalEdit',
-        )
-        return fragment
-
-    @XBlock.json_handler
-    def studio_view_save(self, data, suffix=''):
-        """
-        Save XBlock fields
-
-        Returns: the new field values
-        """
-
-        self.display_name = data['display_name']
-        self.image_url = data['image_url']
-        self.thumbnail_url = data['thumbnail_url']
-        return {
-            'display_name': self.display_name,
-            'image_url': self.image_url,
-            'thumbnail_url': self.thumbnail_url,
-        }
 
     def get_resource_string(self, path):
         """
