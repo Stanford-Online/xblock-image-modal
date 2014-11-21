@@ -6,6 +6,7 @@ import os
 import pkg_resources
 
 from xblock.core import XBlock
+from xblock.fields import Boolean
 from xblock.fields import Scope
 from xblock.fields import String
 from xblock.fragment import Fragment
@@ -57,6 +58,13 @@ class ImageModal(XBlock):
         scope=Scope.settings,
         help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
         display_name="Thumbnail URL",
+    )
+
+    should_enable_preview = Boolean(
+        default=False,
+        scope=Scope.settings,
+        help='Control whether or not the preview is interactive in Studio',
+        display_name='Disable in Studio?',
     )
 
     @property
@@ -122,6 +130,7 @@ class ImageModal(XBlock):
                 'display_name': self.display_name,
                 'image_url': self.image_url,
                 'thumbnail_url': self.thumbnail_url or self.image_url,
+                'should_enable_preview': self.should_enable_preview and 'True' or '',
             },
         )
         return fragment
