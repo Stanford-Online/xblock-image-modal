@@ -42,18 +42,21 @@ class ImageModal(XBlock):
         default='Image Modal XBlock',
         scope=Scope.settings,
         help="This is the XBlock's display name",
+        display_name="Display Name",
     )
 
     image_url = String(
         default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
         scope=Scope.settings,
         help='This is the location of the full-screen image to be displayed.',
+        display_name="Image URL",
     )
 
     thumbnail_url = String(
         default='',
         scope=Scope.settings,
         help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
+        display_name="Thumbnail URL",
     )
 
     def student_view(self, context=None):
