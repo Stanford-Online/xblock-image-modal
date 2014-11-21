@@ -59,6 +59,48 @@ class ImageModal(XBlock):
         display_name="Thumbnail URL",
     )
 
+    @property
+    def editor_tabs(self):
+        return [
+            {
+                "display_name": "Settings",
+                "id": "settings",
+            },
+            {
+                "display_name": "About",
+                "id": "about",
+            },
+        ]
+
+    def about_tab_view(self, context=None):
+        fragment = Fragment(u"""
+            <h1>About This XBlock</h1>
+            <div>
+                The default Studio View was created at the OpenEdX
+                Hackathon (November 2014) by:
+                <ul>
+                    <li>
+                        <a href="https://github.com/stvstnfrd" target="_blank">Steven Burch</a>
+                        (<a href="https://github.com/Stanford-Online" target="_blank">Stanford</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/stephensanchez" target="_blank">Stephen Sanchez</a>
+                        (<a href="https://github.com/edx">edX</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/cahrens">Christina Roberts</a>
+                        (<a href="https://github.com/edx">edX</a>)
+                    </li>
+                    <li>
+                        <a href="https://github.com/andy-armstrong">Andy Armstrong</a> (<a href="https://github.com/edx">edX</a>)</li>
+                </ul>
+            </div>
+            <div>
+                This XBlock was created by stv at Stanford.
+            </div>
+        """)
+        return fragment
+
     def student_view(self, context=None):
         """
         Build the fragment for the default student view
