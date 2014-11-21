@@ -64,7 +64,7 @@ class ImageModal(XBlock):
         default=False,
         scope=Scope.settings,
         help='Control whether or not the preview is interactive in Studio',
-        display_name='Disable in Studio?',
+        display_name='Enable Preview in Studio?',
     )
 
     @property

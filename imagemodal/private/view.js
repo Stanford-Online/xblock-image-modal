@@ -131,7 +131,7 @@ function ImageModalView(runtime, element) {
 
     runtime = runtime || {};
     closeModal();
-    if ($element.attr('data-runtime-class') === 'PreviewRuntime' && $element.data('should_enable_preview')) {
+    if ($element.attr('data-runtime-class') === 'PreviewRuntime' && $element.data('should_enable_preview') === 'True') {
         anchor.on('click.imagemodal', preventDefault);
     } else {
         anchor.on('click.imagemodal', openModal);
