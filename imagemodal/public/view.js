@@ -4,7 +4,6 @@ function ImageModalView(runtime, element) {
     var $ = window.jQuery;
     var $element = $(element);
     var draggie;
-    var lastTarget;
     var KEY_ENTER = 13;
     var KEY_ESCAPE = 27;
     var Draggabilly = window.Draggabilly;
@@ -105,14 +104,10 @@ function ImageModalView(runtime, element) {
         buttonZoom.off('.imagemodal');
         curtain.off('.imagemodal');
         image.off('.imagemodal');
-        if (lastTarget) {
-            lastTarget.focus();
-        }
         return false;
     }
 
     function openModal(event) {
-        lastTarget = event.target;
         curtain.show();
         body.css('overflow', 'hidden');
         body.on('keyup.imagemodal', function (event) {
