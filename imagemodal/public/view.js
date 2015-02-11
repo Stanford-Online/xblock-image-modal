@@ -12,6 +12,8 @@ function ImageModalView(runtime, element) {
     var curtain = $element.find('.curtain');
     var image = curtain.find('IMG');
     var mask = curtain.find('.mask');
+    var wrapper = $element.find('.wrapper');
+    var buttonFullScreen = wrapper.find('BUTTON.fullscreen');
     var buttonZoom = curtain.find('BUTTON.zoom');
     var buttonZoomText = buttonZoom.find('SPAN');
     var buttonZoomIcon = buttonZoom.find('I');
@@ -130,5 +132,6 @@ function ImageModalView(runtime, element) {
         anchor.on('click.imagemodal', preventDefault);
     } else {
         anchor.on('click.imagemodal', openModal);
+        buttonFullScreen.on('click.imagemodal', openModal);
     }
 }
