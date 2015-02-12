@@ -4,7 +4,6 @@ function ImageModalView(runtime, element) {
     var $ = window.jQuery;
     var $element = $(element);
     var draggie;
-    var lastTarget;
     var KEY_ENTER = 13;
     var KEY_ESCAPE = 27;
     var Draggabilly = window.Draggabilly;
@@ -13,6 +12,8 @@ function ImageModalView(runtime, element) {
     var curtain = $element.find('.curtain');
     var image = curtain.find('IMG');
     var mask = curtain.find('.mask');
+    var wrapper = $element.find('.wrapper');
+    var buttonFullScreen = wrapper.find('BUTTON.fullscreen');
     var buttonZoom = curtain.find('BUTTON.zoom');
     var buttonZoomText = buttonZoom.find('SPAN');
     var buttonZoomIcon = buttonZoom.find('I');
@@ -105,14 +106,10 @@ function ImageModalView(runtime, element) {
         buttonZoom.off('.imagemodal');
         curtain.off('.imagemodal');
         image.off('.imagemodal');
-        if (lastTarget) {
-            lastTarget.focus();
-        }
         return false;
     }
 
     function openModal(event) {
-        lastTarget = event.target;
         curtain.show();
         body.css('overflow', 'hidden');
         body.on('keyup.imagemodal', function (event) {
@@ -135,5 +132,6 @@ function ImageModalView(runtime, element) {
         anchor.on('click.imagemodal', preventDefault);
     } else {
         anchor.on('click.imagemodal', openModal);
+        buttonFullScreen.on('click.imagemodal', openModal);
     }
 }
