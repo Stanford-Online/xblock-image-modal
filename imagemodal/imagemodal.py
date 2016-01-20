@@ -5,6 +5,8 @@ import os
 
 import pkg_resources
 
+from django.utils.translation import ugettext as _
+
 from xblock.core import XBlock
 from xblock.fields import Scope
 from xblock.fields import String
@@ -41,24 +43,29 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         ]
 
     display_name = String(
-        display_name='Display Name',
-        default='Image Modal XBlock',
+        display_name=_('Display Name'),
+        default=_('Image Modal XBlock'),
         scope=Scope.settings,
-        help="This is the XBlock's display name",
+        help=_("This is the XBlock's display name"),
     )
 
     image_url = String(
-        display_name='Image URL',
+        display_name=_('Image URL'),
         default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
         scope=Scope.settings,
-        help='This is the location of the full-screen image to be displayed.',
+        help=_(
+            'This is the location of the full-screen image to be displayed.'
+        ),
     )
 
     thumbnail_url = String(
-        display_name='Thumbnail URL',
+        display_name=_('Thumbnail URL'),
         default='',
         scope=Scope.settings,
-        help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
+        help=_(
+            'This is the (optional) location of a thumbnail image to be '
+            'displayed before the main image has been enlarged.'
+        ),
     )
 
     editable_fields = [
