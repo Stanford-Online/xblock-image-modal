@@ -19,6 +19,7 @@ setup(
     ],
     install_requires=[
         'XBlock',
+        # xblockutils
     ],
     entry_points={
         'xblock.v1': [

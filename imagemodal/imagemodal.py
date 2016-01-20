@@ -10,13 +10,15 @@ from xblock.fields import Scope
 from xblock.fields import String
 from xblock.fragment import Fragment
 
+from xblockutils.studio_editable import StudioEditableXBlockMixin
+
 DEFAULT_FIELDS = [
     'parent',
     'tags',
 ]
 
 
-class ImageModal(XBlock):
+class ImageModal(StudioEditableXBlockMixin, XBlock):
     """
     A fullscreen image modal XBlock.
     """
@@ -39,22 +41,31 @@ class ImageModal(XBlock):
         ]
 
     display_name = String(
+        display_name='Display Name',
         default='Image Modal XBlock',
         scope=Scope.settings,
         help="This is the XBlock's display name",
     )
 
     image_url = String(
+        display_name='Image URL',
         default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
         scope=Scope.settings,
         help='This is the location of the full-screen image to be displayed.',
     )
 
     thumbnail_url = String(
+        display_name='Thumbnail URL',
         default='',
         scope=Scope.settings,
         help='This is the (optional) location of a thumbnail image to be displayed before the main image has been enlarged.',
     )
+
+    editable_fields = [
+        'display_name',
+        'image_url',
+        'thumbnail_url',
+    ]
 
     def student_view(self, context=None):
         """
@@ -80,41 +91,6 @@ class ImageModal(XBlock):
             },
         )
         return fragment
-
-    def studio_view(self, context=None):
-        """
-        Build the fragment for the edit/studio view
-
-        Implementation is optional.
-        """
-        fragment = self.build_fragment(
-            path_html='edit.html',
-            paths_css=[
-                'edit.less.min.css',
-            ],
-            paths_js=[
-                'edit.js.min.js',
-            ],
-            fragment_js='ImageModalEdit',
-        )
-        return fragment
-
-    @XBlock.json_handler
-    def studio_view_save(self, data, suffix=''):
-        """
-        Save XBlock fields
-
-        Returns: the new field values
-        """
-
-        self.display_name = data['display_name']
-        self.image_url = data['image_url']
-        self.thumbnail_url = data['thumbnail_url']
-        return {
-            'display_name': self.display_name,
-            'image_url': self.image_url,
-            'thumbnail_url': self.thumbnail_url,
-        }
 
     def get_resource_string(self, path):
         """
