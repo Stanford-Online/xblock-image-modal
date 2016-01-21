@@ -37,6 +37,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                     <imagemodal
                         display_name="Image Modal With Thumbnail"
                         thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
+                        description="Put screenreader text here"
                     />
                 </sequence_demo>
              """),
@@ -68,10 +69,19 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         ),
     )
 
+    description = String(
+        display_name=_('Description'),
+        default='',
+        scope=Scope.settings,
+        help=_('Description text, displayed to screen readers'),
+        multiline_editor=True,
+    )
+
     editable_fields = [
         'display_name',
         'image_url',
         'thumbnail_url',
+        'description',
     ]
 
     def student_view(self, context=None):
@@ -95,6 +105,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'display_name': self.display_name,
                 'image_url': self.image_url,
                 'thumbnail_url': self.thumbnail_url or self.image_url,
+                'description': self.description,
+                'xblock_id': unicode(self.scope_ids.usage_id),
             },
         )
         return fragment
