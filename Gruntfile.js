@@ -27,23 +27,11 @@ module.exports = function (grunt) {
                 ],
                 dest: directoryPublic + '/view.js',
             },
-            jsEdit: {
-                src: [
-                    directoryPrivate + '/edit.js',
-                ],
-                dest: directoryPublic + '/edit.js',
-            },
             cssView: {
                 src: [
                     directoryPrivate + '/view.less',
                 ],
                 dest: directoryPublic + '/view.less',
-            },
-            cssEdit: {
-                src: [
-                    directoryPrivate + '/edit.less',
-                ],
-                dest: directoryPublic + '/edit.less',
             },
         },
         copy: {
@@ -98,7 +86,6 @@ module.exports = function (grunt) {
                     removeEmptyAttributes: true,
                 },
                 files: {
-                    'imagemodal/public/edit.html': directoryPrivate + '/edit.html',
                     'imagemodal/public/view.html': directoryPrivate + '/view.html',
                 },
             },
@@ -126,19 +113,6 @@ module.exports = function (grunt) {
                 files: {
                     'imagemodal/public/view.less.min.css':
                         directoryPublic + '/view.less',
-                },
-            },
-            edit: {
-                options: {
-                    sourceMap: true,
-                    sourceMapFilename: 'imagemodal/public/edit.less.min.css.map',
-                    outputSourceFiles: true,
-                    cleancss: true,
-                    compress: true,
-                },
-                files: {
-                    'imagemodal/public/edit.less.min.css':
-                        directoryPublic + '/edit.less',
                 },
             },
         },
