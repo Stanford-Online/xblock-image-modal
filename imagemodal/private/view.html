@@ -2,7 +2,11 @@
     <h2>{display_name}</h2>
     <div class="wrapper">
         <a href="{image_url}">
-            <img alt="{display_name}" src="{thumbnail_url}" />
+            <img
+                alt="{display_name}"
+                src="{thumbnail_url}"
+                aria-describedby="xblock_imagemodal__description__{xblock_id}"
+            />
         </a>
         <button class="fullscreen">
             <i class="icon-fullscreen icon-large"></i>
@@ -24,4 +28,5 @@
             </button>
         </div>
     </div>
+    <p id="xblock_imagemodal__description__{xblock_id}" class="sr">{description}</p>
 </div>
