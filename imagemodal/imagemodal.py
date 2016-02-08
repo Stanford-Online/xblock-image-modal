@@ -77,11 +77,22 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         multiline_editor=True,
     )
 
+    alt_text = String(
+        display_name=_('Alt Text'),
+        default='',
+        scope=Scope.settings,
+        help=_(
+            'This field allows you to add alternate or descriptive text'
+            'that pertains to your image.'
+        ),
+    )
+
     editable_fields = [
         'display_name',
         'image_url',
         'thumbnail_url',
         'description',
+        'alt_text',
     ]
 
     def student_view(self, context=None):
@@ -107,6 +118,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'thumbnail_url': self.thumbnail_url or self.image_url,
                 'description': self.description,
                 'xblock_id': unicode(self.scope_ids.usage_id),
+                'alt_text': self.alt_text or self.display_name,
             },
         )
         return fragment
