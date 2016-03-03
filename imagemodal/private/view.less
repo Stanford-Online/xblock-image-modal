@@ -69,8 +69,11 @@
         background-color: rgba(0, 0, 0, 0.7);
         cursor: no-drop;
 
-        // Override LMS's sequence nav (z-index: 99;)
-        z-index: 100;
+        /*
+        Override LMS's sequence-nav (z-index: 99;)
+        and modal-backdrop (z-index: 1000;)
+        */
+        z-index: 1001;
 
         .mask {
             height: 95%;
