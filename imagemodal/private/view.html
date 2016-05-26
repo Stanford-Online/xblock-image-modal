@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="imagemodal_block">
     <h2>{display_name}</h2>
     <div class="wrapper">
@@ -10,7 +11,7 @@
         </a>
         <button class="fullscreen">
             <i class="icon-fullscreen icon-large"></i>
-            <span>Fullscreen</span>
+            <span>{% trans "Fullscreen" %}</span>
         </button>
     </div>
     <div class="curtain">
@@ -20,11 +21,11 @@
             </div>
             <button class="zoom">
                 <i class="icon-zoom-in icon-large"></i>
-                <span>Zoom In</span>
+                <span>{% trans "Zoom In" %}</span>
             </button>
             <button class="close">
                 <i class="icon-remove icon-large"></i>
-                <span>Close</span>
+                <span>{% trans "Close" %}</span>
             </button>
         </div>
     </div>
