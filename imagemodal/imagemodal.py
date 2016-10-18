@@ -50,6 +50,14 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         help=_("This is the XBlock's display name"),
     )
 
+    pre_html = String(
+        display_name=_('HTML before image'),
+        default='',
+        scope=Scope.settings,
+        help=_('This is HTML that you want to appear before the image. Use opening and closing tags (ie. "<p>...</p>").'),
+        multiline_editor=True,
+    )
+
     image_url = String(
         display_name=_('Image URL'),
         default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
@@ -89,6 +97,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
 
     editable_fields = [
         'display_name',
+        'pre_html',
         'image_url',
         'thumbnail_url',
         'description',
@@ -114,6 +123,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
             fragment_js='ImageModalView',
             context={
                 'display_name': self.display_name,
+                'pre_html': self.pre_html,
                 'image_url': self.image_url,
                 'thumbnail_url': self.thumbnail_url or self.image_url,
                 'description': self.description,
