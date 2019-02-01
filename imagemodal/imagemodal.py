@@ -45,7 +45,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
 
     display_name = String(
         display_name=_('Display Name'),
-        default=_('Image Modal XBlock'),
+        default='Image Modal XBlock',
         scope=Scope.settings,
         help=_("This is the XBlock's display name"),
     )
