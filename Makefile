@@ -18,6 +18,8 @@ test:  ## Run the library test suite
 
 quality:  ## Run all quality checks
 	tox -e pycodestyle -e pylint
+	make eslint
+	make csslint
 
 pylint:  ## Run the pylint checks
 	tox -e pylint
@@ -29,9 +31,8 @@ eslint:  ## Run the eslint checks
 	eslint imagemodal/public/view.js
 
 css_files := $(patsubst %.less, %.less.css, $(wildcard ./imagemodal/public/*.less))
-css: $(css_files)  ## Run the csslint checks
+csslint: $(css_files)  ## Run the csslint checks
 	csslint imagemodal/
-
 
 imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	@echo "$< -> $@"
