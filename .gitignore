@@ -1,4 +1,8 @@
 *.egg-info/
 node_modules/
+*.log
 *.pyc
 *.sw[op]
+.tox/
+sdk/
+venv/
