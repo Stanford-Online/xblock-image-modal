@@ -1,0 +1,89 @@
+.imagemodal_block P {
+  cursor: pointer;
+}
+.imagemodal_block IMG {
+  max-width: 100%;
+}
+.imagemodal_block A,
+.imagemodal_block BUTTON {
+  cursor: pointer;
+}
+.imagemodal_block BUTTON {
+  border: 2px solid #2e2d29;
+  background: #fbfbf9;
+  color: #2e2d29;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.9;
+  padding: 5px 7px 7px;
+  font-weight: bold;
+  font-size: 1em;
+}
+.imagemodal_block BUTTON I {
+  font-style: normal;
+}
+.imagemodal_block .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.imagemodal_block .zoom {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.imagemodal_block .fullscreen {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.imagemodal_block .wrapper {
+  position: relative;
+}
+.imagemodal_block .count {
+  font-weight: bold;
+}
+.imagemodal_block .curtain {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.7);
+  cursor: no-drop;
+  /*
+        Override LMS's sequence-nav (z-index: 99;)
+        and modal-backdrop (z-index: 1000;)
+        */
+  z-index: 1001;
+}
+.imagemodal_block .curtain .mask {
+  height: 95%;
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  top: 2.5%;
+}
+.imagemodal_block .curtain .mask .wrapper {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: relative;
+}
+.imagemodal_block .curtain .mask .wrapper IMG {
+  display: block;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  cursor: zoom-in;
+}
+.imagemodal_block .curtain .mask .wrapper .zoomed {
+  max-height: none;
+  max-width: none;
+  cursor: move;
+}
