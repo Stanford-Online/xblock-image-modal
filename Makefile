@@ -13,6 +13,9 @@ clean:  ## Remove all build artifacts
 	rm -rf .eggs/
 	rm -rf reports/
 
+destroy:
+	vagrant destroy -f
+
 test:  ## Run the library test suite
 	tox -e py27
 
@@ -42,3 +45,7 @@ all:  ## Run all quality checks and unit tests
 	tox
 	make eslint
 	make css
+
+run:  # Run the workbench server w/ this XBlock installed
+	vagrant up
+	vagrant ssh -c 'cd /home/vagrant/sdk/ && ./manage.py runserver 0.0.0.0:8000'

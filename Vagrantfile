@@ -9,9 +9,17 @@ apt-get install -y npm
 npm install -g eslint
 npm install -g less
 npm install -g csslint
-sudo -u vagrant pip install tox
-sudo -u vagrant git clone https://github.com/edx/xblock-sdk.git /home/vagrant/sdk
+sudo -H -u vagrant git clone https://github.com/edx/xblock-sdk.git /home/vagrant/sdk
+sudo -H -u vagrant pip install --user pip
+sudo -H -u vagrant pip install --user tox
+sudo -H -u vagrant pip install --user -e /home/vagrant/xblock/
+cd /home/vagrant/sdk
+sudo -H -u vagrant pip install --user -e .
+sudo -H -u vagrant pip install --user -qr ./requirements/local.txt --exists-action w
+sudo -H -u vagrant pip install --user -qr ./requirements/dev.txt --exists-action w
+sudo -H -u vagrant python ./manage.py migrate
 SCRIPT
+# sudo -H -u vagrant python ./manage.py runserver 0.0.0.0:8000
 
 Vagrant.configure('2') do |config|
   # Creates an edX devstack VM from an official release
