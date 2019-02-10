@@ -106,7 +106,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         fragment = self.build_fragment(
             path_html='view.html',
             paths_css=[
-                'view.less.min.css',
+                'view.less.css',
             ],
             paths_js=[
                 'draggabilly.pkg.js',
