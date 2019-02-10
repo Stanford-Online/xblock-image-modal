@@ -19,4 +19,5 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = true
   config.vm.synced_folder  ".", "/home/vagrant/xblock", disabled: false
   config.vm.provision "shell", inline: $script
+  config.vm.network :forwarded_port, guest: 8000, host: 8000
 end
