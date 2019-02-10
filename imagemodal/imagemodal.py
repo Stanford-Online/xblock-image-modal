@@ -109,7 +109,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'view.less.css',
             ],
             paths_js=[
-                'draggabilly.pkg.js',
+                'draggabilly.pkgd.js',
                 'view.js',
             ],
             urls_css=[
