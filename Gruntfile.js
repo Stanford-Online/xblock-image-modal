@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var jshintrc = '.jshintrc';
     var gruntFile = 'Gruntfile.js';
     var directoryPackage = './imagemodal';
     var directoryPrivate = directoryPackage + '/private';
@@ -20,12 +19,6 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 separator: ';\n',
-            },
-            jsView: {
-                src: [
-                    directoryPrivate + '/view.js',
-                ],
-                dest: directoryPublic + '/view.js',
             },
             cssView: {
                 src: [
@@ -47,10 +40,6 @@ module.exports = function (grunt) {
                         dest: directoryPublic + '/',
                     },
                 ],
-            },
-            vendor: {
-                src: directoryPrivate + '/draggabilly.pkgd.js',
-                dest: directoryPublic + '/draggabilly.pkgd.js',
             },
         },
         csslint: {
@@ -90,17 +79,6 @@ module.exports = function (grunt) {
                 },
             },
         },
-        jshint: {
-            options: {
-                ignores: [
-                    directoryPrivate + '/**/draggabilly.pkgd.js',
-                ],
-            },
-            dist: [
-                gruntFile,
-                directoryPrivateJsAll,
-            ],
-        },
         less: {
             view: {
                 options: {
@@ -137,7 +115,6 @@ module.exports = function (grunt) {
         watch: {
             dist: {
                 files: [
-                    jshintrc,
                     gruntFile,
                     directoryPrivateJsAll,
                     directoryPrivateLessAll,
@@ -150,7 +127,6 @@ module.exports = function (grunt) {
         },
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -162,7 +138,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
     grunt.registerTask('default', [
-        'jshint',
         'concat',
         'copy',
         'less',

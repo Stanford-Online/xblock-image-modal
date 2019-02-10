@@ -109,8 +109,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'view.less.min.css',
             ],
             paths_js=[
-                'draggabilly.js.min.js',
-                'view.js.min.js',
+                'draggabilly.pkgd.js',
+                'view.js',
             ],
             urls_css=[
                 '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
