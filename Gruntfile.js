@@ -7,7 +7,6 @@ module.exports = function (grunt) {
     var directoryPublic = directoryPackage + '/public';
     var directoryPrivateJsAll = directoryPrivate + '/**/*.js';
     var directoryPrivateLessAll = directoryPrivate + '/**/*.less';
-    var directoryPrivateHtmlAll = directoryPrivate + '/**/*.html';
     var directoryPublicCssAll = directoryPublic + '/**/*.css';
 
     grunt.initConfig({
@@ -64,21 +63,6 @@ module.exports = function (grunt) {
                 }],
             },
         },
-        htmlmin: {
-            all: {
-                options: {
-                    removeComments: true,
-                    removeCommentsFromCDATA: true,
-                    collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeRedundantAttributes: true,
-                    removeEmptyAttributes: true,
-                },
-                files: {
-                    'imagemodal/public/view.html': directoryPrivate + '/view.html',
-                },
-            },
-        },
         less: {
             view: {
                 options: {
@@ -118,7 +102,6 @@ module.exports = function (grunt) {
                     gruntFile,
                     directoryPrivateJsAll,
                     directoryPrivateLessAll,
-                    directoryPrivateHtmlAll,
                 ],
                 tasks: [
                     'default',
@@ -135,7 +118,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
     grunt.registerTask('default', [
         'concat',
@@ -143,6 +125,5 @@ module.exports = function (grunt) {
         'less',
         'csslint',
         'uglify',
-        'htmlmin',
     ]);
 };
