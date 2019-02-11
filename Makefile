@@ -6,6 +6,11 @@ help:  ## This.
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+all:  ## Run all quality checks and unit tests
+	make css
+	make eslint
+	tox
+
 clean:  ## Remove all build artifacts
 	rm -rf .tox/
 	find . -name '*.pyc'
@@ -20,9 +25,10 @@ test:  ## Run the library test suite
 	tox -e py27
 
 quality:  ## Run all quality checks
-	tox -e pycodestyle -e pylint
 	make eslint
 	make csslint
+	make pycodestyle
+	make pylint
 
 pylint:  ## Run the pylint checks
 	tox -e pylint
@@ -40,11 +46,6 @@ csslint: $(css_files)  ## Run the csslint checks
 imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	@echo "$< -> $@"
 	lessc $< $@
-
-all:  ## Run all quality checks and unit tests
-	tox
-	make eslint
-	make css
 
 run:  # Run the workbench server w/ this XBlock installed
 	vagrant up
