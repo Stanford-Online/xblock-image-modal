@@ -33,12 +33,12 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         return [
             ('Image Modal XBlock',
              """<sequence_demo>
-                    <imagemodal />
                     <imagemodal
                         display_name="Image Modal With Thumbnail"
                         thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
                         description="Put screenreader text here"
                     />
+                    <imagemodal />
                 </sequence_demo>
              """),
         ]
