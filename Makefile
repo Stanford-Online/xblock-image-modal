@@ -7,9 +7,11 @@ help:  ## This.
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 all:  ## Run all quality checks and unit tests
-	make css
+	make csslint
 	make eslint
-	tox
+	make test
+	make pycodestyle
+	make pylint
 
 clean:  ## Remove all build artifacts
 	rm -rf .tox/
@@ -49,4 +51,4 @@ imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 
 run:  # Run the workbench server w/ this XBlock installed
 	vagrant up
-	vagrant ssh -c 'cd /home/vagrant/sdk/ && ./manage.py runserver 0.0.0.0:8000'
+	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
