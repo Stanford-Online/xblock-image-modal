@@ -18,6 +18,7 @@ setup(
         'imagemodal',
     ],
     install_requires=[
+        'Django<2.0.0',
         'XBlock',
         'xblock-utils',
     ],
