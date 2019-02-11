@@ -44,14 +44,29 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         # pylint: disable=no-self-use
         # pylint: disable=line-too-long
         return [
-            ('Image Modal XBlock',
+            ('Image Modal XBlock, single',
              """<sequence_demo>
-                    <imagemodal />
                     <imagemodal
                         display_name="Image Modal With Thumbnail"
                         thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
                         description="Put screenreader text here"
                     />
+                </sequence_demo>
+             """),
+            ('Image Modal XBlock, multiple',
+             """<sequence_demo>
+                    <vertical_demo>
+                        <imagemodal
+                            display_name="Image Modal With Thumbnail"
+                            thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
+                            description="Put screenreader text here"
+                        />
+                        <imagemodal description="Write stuff here" />
+                    </vertical_demo>
+                    <vertical_demo>
+                        <imagemodal description="Write stuff here" />
+                        <imagemodal description="Write more here" />
+                    </vertical_demo>
                 </sequence_demo>
              """),
         ]
