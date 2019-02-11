@@ -1,0 +1,14 @@
+[run]
+data_file = reports/.coverage
+source = imagemodal
+branch = true
+
+[report]
+ignore_errors = True
+
+[html]
+title = ImageModal Python Test Coverage Report
+directory = reports/cover
+
+[xml]
+output = reports/coverage.xml
