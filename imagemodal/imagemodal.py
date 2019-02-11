@@ -148,16 +148,20 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
 
     def build_fragment(self,
         path_html='',
-        paths_css=[],
-        paths_js=[],
-        urls_css=[],
-        urls_js=[],
+        paths_css=None,
+        paths_js=None,
+        urls_css=None,
+        urls_js=None,
         fragment_js=None,
         context=None,
     ):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
         """
+        paths_css = paths_css or []
+        paths_js = paths_js or []
+        urls_css = urls_css or []
+        urls_js = urls_js or []
         # If no context is provided, convert self.fields into a dict
         context = context or {
             key: getattr(self, key)
