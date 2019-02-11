@@ -48,4 +48,5 @@ setup(
         'Topic :: Education',
         'Topic :: Internet :: WWW/HTTP',
     ],
+    test_suite='imagemodal.tests',
 )
