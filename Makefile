@@ -22,6 +22,7 @@ clean:  ## Remove all build artifacts
 	rm -rf .eggs/
 	rm -rf reports/
 
+
 destroy:
 	vagrant destroy -f
 
@@ -54,19 +55,6 @@ imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 run:  # Run the workbench server w/ this XBlock installed
 	vagrant up
 	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
-
-bootstrap:
-	apt-get update -y
-	apt-get install -y build-essential
-	apt-get install -y python-dev python-pip
-	apt-get install -y virtualenv
-	apt-get install -y python3-dev python3-pip
-	curl -sL https://deb.nodesource.com/setup_8.x | bash -
-	apt-get install -y nodejs
-	apt-get install -y npm
-	npm install -g eslint
-	npm install -g less
-	npm install -g csslint
 
 go:
 	test -d sdk || git clone https://github.com/edx/xblock-sdk.git sdk
