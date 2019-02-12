@@ -14,6 +14,8 @@ all:  ## Run all quality checks and unit tests
 	make pylint
 
 clean:  ## Remove all build artifacts
+	deactivate
+	rm -rf venv/
 	rm -rf .tox/
 	find . -name '*.pyc'
 	rm -rf *.egg-info/
@@ -52,3 +54,31 @@ imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 run:  # Run the workbench server w/ this XBlock installed
 	vagrant up
 	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
+
+bootstrap:
+	apt-get update -y
+	apt-get install -y build-essential
+	apt-get install -y python-dev python-pip
+	apt-get install -y virtualenv
+	apt-get install -y python3-dev python3-pip
+	curl -sL https://deb.nodesource.com/setup_8.x | bash -
+	apt-get install -y nodejs
+	apt-get install -y npm
+	npm install -g eslint
+	npm install -g less
+	npm install -g csslint
+
+go:
+	test -d sdk || git clone https://github.com/edx/xblock-sdk.git sdk
+	test -d venv || virtualenv venv
+	. venv/bin/activate
+	pip install tox
+	pip install -e ./
+	cd sdk/
+	sed -i.bak "s/'[_a-z]\+ *= *sample_xblocks\.\(basic\.\(problem\|content\|slider\)\|.*thumbs\)/\# &/g" sdk/setup.py
+	sed -i.bak 's/.*acid-block\.git/# &/g' sdk/requirements/dev.txt
+	pip install -e ./sdk/
+	pip install -qr ./sdk/requirements/local.txt --exists-action w
+	pip install -qr ./sdk/requirements/dev.txt --exists-action w
+	cd sdk && python ./manage.py migrate
+
