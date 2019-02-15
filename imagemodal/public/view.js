@@ -1,7 +1,13 @@
+'use strict';
 /* eslint-disable no-unused-vars */
+/**
+ * Initialize the ImageModal student view
+ * @param {Object} runtime - The XBlock JS Runtime
+ * @param {Object} element - The containing DOM element for this instance of the XBlock
+ * @returns {undefined} nothing
+ */
 function ImageModalView(runtime, element) {
     /* eslint-enable no-unused-vars */
-    'use strict';
 
     var $ = window.jQuery;
     var $element = $(element);
@@ -20,10 +26,18 @@ function ImageModalView(runtime, element) {
     var buttonZoomText = buttonZoom.find('SPAN');
     var buttonZoomIcon = buttonZoom.find('I');
 
+    /**
+     * Prevent the default event from bubbling up
+     * @returns {boolean} False to stop event bubbling
+     */
     function preventDefault() {
         return false;
     }
 
+    /**
+     * Zoom in on the image
+     * @returns {undefined} nothing
+     */
     function zoomIn() {
         var maskLeft;
         var maskTop;
@@ -68,11 +82,30 @@ function ImageModalView(runtime, element) {
         }
     }
 
+    /**
+     * Close the image modal
+     * @returns {boolean} False to stop event bubbling
+     */
+    function closeModal() {
+        body.css('overflow', '');
+        curtain.hide();
+        body.off('.imagemodal');
+        buttonZoom.off('.imagemodal');
+        curtain.off('.imagemodal');
+        image.off('.imagemodal');
+        return false;
+    }
+
+    /**
+     * Zoom out from the image
+     * @returns {undefined} nothing
+     */
     function zoomOut() {
         buttonZoomText.text('Zoom In');
         buttonZoomIcon.removeClass('icon-zoom-out');
         buttonZoomIcon.addClass('icon-zoom-in');
         image.off('.imagemodal');
+        // eslint-disable-next-line no-use-before-define
         image.on('click.imagemodal_zoomout', openModal);
         image.removeClass('zoomed');
         image.parent().css({
@@ -91,6 +124,10 @@ function ImageModalView(runtime, element) {
         }
     }
 
+    /**
+     * Toggle the zoom state in and out
+     * @returns {boolean} False to stop event bubbling
+     */
     function toggleZoom() {
         var isZoomed = image.hasClass('zoomed');
         if (isZoomed) {
@@ -101,26 +138,21 @@ function ImageModalView(runtime, element) {
         return false;
     }
 
-    function closeModal() {
-        body.css('overflow', '');
-        curtain.hide();
-        body.off('.imagemodal');
-        buttonZoom.off('.imagemodal');
-        curtain.off('.imagemodal');
-        image.off('.imagemodal');
-        return false;
-    }
-
+    /**
+     * Open the image modal div
+     * @returns {boolean} False to stop event bubbling
+     */
     function openModal() {
         curtain.show();
         body.css('overflow', 'hidden');
-        body.on('keyup.imagemodal', function (event) {
+        body.on('keyup.imagemodal', function(event) {
             if (event.which === KEY_ESCAPE) {
                 return closeModal();
             }
             if (event.which === KEY_ENTER) {
                 return toggleZoom();
             }
+            return true;
         });
         buttonZoom.on('click.imagemodal', toggleZoom);
         curtain.on('click.imagemodal', closeModal);
@@ -128,7 +160,6 @@ function ImageModalView(runtime, element) {
         return false;
     }
 
-    runtime = runtime || {};
     closeModal();
     if ($element.attr('data-runtime-class') === 'PreviewRuntime') {
         anchor.on('click.imagemodal', preventDefault);
