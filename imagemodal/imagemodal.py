@@ -168,14 +168,14 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         return resource_url
 
     def build_fragment(
-        self,
-        path_html='',
-        paths_css=None,
-        paths_js=None,
-        urls_css=None,
-        urls_js=None,
-        fragment_js=None,
-        context=None,
+            self,
+            path_html='',
+            paths_css=None,
+            paths_js=None,
+            urls_css=None,
+            urls_js=None,
+            fragment_js=None,
+            context=None,
     ):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
