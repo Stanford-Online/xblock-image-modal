@@ -19,11 +19,21 @@ DEFAULT_FIELDS = [
     'tags',
 ]
 
+def get_resource_string(path):
+    """
+    Retrieve string contents for the file path
+    """
+    path = os.path.join('public', path)
+    resource_string = pkg_resources.resource_string(__name__, path)
+    return resource_string.decode('utf8')
 
+
+# pylint: disable=too-many-ancestors
 class ImageModal(StudioEditableXBlockMixin, XBlock):
     """
     A fullscreen image modal XBlock.
     """
+    # pylint: enable=too-many-ancestors
 
     @staticmethod
     def workbench_scenarios():
@@ -116,6 +126,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         'alt_text',
     ]
 
+    # pylint: disable=unused-argument
     # Decorate the view in order to support multiple devices e.g. mobile
     # See: https://openedx.atlassian.net/wiki/display/MA/Course+Blocks+API
     # section 'View @supports(multi_device) decorator'
@@ -124,6 +135,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Build the fragment for the default student view
         """
+        # pylint: enable=unused-argument
         fragment = self.build_fragment(
             path_html='view.html',
             paths_css=[
@@ -152,14 +164,6 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         )
         return fragment
 
-    def get_resource_string(self, path):
-        """
-        Retrieve string contents for the file path
-        """
-        path = os.path.join('public', path)
-        resource_string = pkg_resources.resource_string(__name__, path)
-        return resource_string.decode('utf8')
-
     def get_resource_url(self, path):
         """
         Retrieve a public URL for the file path
@@ -168,6 +172,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         resource_url = self.runtime.local_resource_url(self, path)
         return resource_url
 
+    # pylint: disable=too-many-arguments
     def build_fragment(
             self,
             path_html='',
@@ -181,17 +186,19 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
         """
+        # pylint: enable=too-many-arguments
         paths_css = paths_css or []
         paths_js = paths_js or []
         urls_css = urls_css or []
         urls_js = urls_js or []
         # If no context is provided, convert self.fields into a dict
         context = context or {
+            # pylint: disable=not-an-iterable
             key: getattr(self, key)
             for key in self.fields
             if key not in DEFAULT_FIELDS
         }
-        html_source = self.get_resource_string(path_html)
+        html_source = get_resource_string(path_html)
         html_source = html_source.format(
             **context
         )
