@@ -9,6 +9,10 @@ python:
 matrix:
   include:
     - python: 2.7
+      env: TOXENV=csslint
+    - python: 2.7
+      env: TOXENV=eslint
+    - python: 2.7
       env: TOXENV=py27
     - python: 2.7
       env: TOXENV=pycodestyle
