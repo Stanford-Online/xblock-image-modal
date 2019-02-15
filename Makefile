@@ -8,7 +8,7 @@ help:  ## This.
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 all:  ## Run all quality checks and unit tests
-	tox
+	tox -p all
 
 clean:  ## Remove all build artifacts
 	deactivate
@@ -27,13 +27,13 @@ imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	node_modules/less/bin/lessc $< $@
 
 quality:  ## Run all quality checks
-	tox -e csslint -e eslint -e pycodestyle -e pylint
+	tox -p all -e csslint -e eslint -e pycodestyle -e pylint
 
 quality_static: $(css_files)  ## Run the csslint checks
 	tox -e csslint eslint
 
 quality_python:  ## Run the pycodestyle/pylint checks
-	tox -e pycodestyle -e pylint
+	tox -p all -e pycodestyle -e pylint
 
 requirements:  # Install required packages
 	pip install tox

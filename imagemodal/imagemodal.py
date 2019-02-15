@@ -30,11 +30,11 @@ def get_resource_string(path):
 
 
 # pylint: disable=too-many-ancestors
+# pylint: disable=too-many-arguments
 class ImageModal(StudioEditableXBlockMixin, XBlock):
     """
     A fullscreen image modal XBlock.
     """
-    # pylint: enable=too-many-ancestors
 
     @staticmethod
     def workbench_scenarios():
@@ -42,6 +42,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         Gather scenarios to be displayed in the workbench
         """
         # pylint: disable=no-self-use
+        # pylint: disable=line-too-long
         return [
             ('Image Modal XBlock, single',
              """<sequence_demo>
@@ -69,6 +70,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 </sequence_demo>
              """),
         ]
+        # pylint: disable=line-too-long
 
     display_name = String(
         display_name=_('Display Name'),
@@ -136,7 +138,6 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Build the fragment for the default student view
         """
-        # pylint: enable=unused-argument
         fragment = self.build_fragment(
             path_html='view.html',
             paths_css=[
@@ -164,6 +165,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
             },
         )
         return fragment
+    # pylint: enable=unused-argument
 
     def get_resource_url(self, path):
         """
@@ -173,7 +175,6 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         resource_url = self.runtime.local_resource_url(self, path)
         return resource_url
 
-    # pylint: disable=too-many-arguments
     def build_fragment(
             self,
             path_html='',
@@ -187,7 +188,6 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
         """
-        # pylint: enable=too-many-arguments
         paths_css = paths_css or []
         paths_js = paths_js or []
         urls_css = urls_css or []
@@ -217,3 +217,5 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         if fragment_js:
             fragment.initialize_js(fragment_js)
         return fragment
+# pylint: enable=too-many-arguments
+# pylint: enable=too-many-ancestors
