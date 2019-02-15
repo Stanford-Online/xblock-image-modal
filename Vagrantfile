@@ -17,7 +17,7 @@ test -d sdk || git clone https://github.com/edx/xblock-sdk.git sdk
 test -d venv || virtualenv venv
 . venv/bin/activate
 pip install tox
-pip install -e ./
+pip install -e ./sdk/
 sed -i.bak "s/'[_a-z]\+ *= *sample_xblocks\.\(basic\.\(problem\|content\|slider\)\|.*thumbs\)/\# &/g" sdk/setup.py
 sed -i.bak 's/.*acid-block\.git/# &/g' sdk/requirements/dev.txt
 pip install -e ./sdk/
