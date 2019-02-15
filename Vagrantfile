@@ -23,6 +23,7 @@ sed -i.bak 's/.*acid-block\.git/# &/g' sdk/requirements/dev.txt
 pip install -e ./sdk/
 pip install -qr ./sdk/requirements/local.txt --exists-action w
 pip install -qr ./sdk/requirements/dev.txt --exists-action w
+pip install -e ./xblock/
 cd sdk && python ./manage.py migrate
 SCRIPT
 
