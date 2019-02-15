@@ -48,6 +48,12 @@ quality_pycodestyle:  ## Run the pycodestyle checks
 quality_pylint:  ## Run the pylint checks
 	tox -e pylint
 
+requirements:  # Install required packages
+	pip install tox
+	npm install -g eslint
+	npm install -g less
+	npm install -g csslint
+
 run:  ## Run the workbench server w/ this XBlock installed
 	vagrant up
 	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
