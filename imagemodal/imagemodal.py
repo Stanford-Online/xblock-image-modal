@@ -30,6 +30,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Gather scenarios to be displayed in the workbench
         """
+        # pylint: disable=no-self-use
         return [
             ('Image Modal XBlock, single',
              """<sequence_demo>
