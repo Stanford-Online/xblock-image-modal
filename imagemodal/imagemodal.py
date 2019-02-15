@@ -67,7 +67,12 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
 
     image_url = String(
         display_name=_('Image URL'),
-        default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
+        default=(
+            'http://upload.wikimedia.org/'
+            'wikipedia/commons/4/48/'
+            '1853_Kaei_6_Japanese_Map_of_the_World_-_'
+            'Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg'
+        ),
         scope=Scope.settings,
         help=_(
             'This is the location of the full-screen image to be displayed.'
@@ -128,7 +133,11 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'view.js',
             ],
             urls_css=[
-                '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
+                (
+                    '//netdna.bootstrapcdn.com/'
+                    'font-awesome/3.2.1/css/'
+                    'font-awesome.css'
+                ),
             ],
             fragment_js='ImageModalView',
             context={
@@ -158,7 +167,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         resource_url = self.runtime.local_resource_url(self, path)
         return resource_url
 
-    def build_fragment(self,
+    def build_fragment(
+        self,
         path_html='',
         paths_css=None,
         paths_js=None,
