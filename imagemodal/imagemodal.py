@@ -19,6 +19,7 @@ DEFAULT_FIELDS = [
     'tags',
 ]
 
+
 def get_resource_string(path):
     """
     Retrieve string contents for the file path

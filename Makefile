@@ -8,11 +8,7 @@ help:  ## This.
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 all:  ## Run all quality checks and unit tests
-	make quality_csslint
-	make quality_eslint
-	make test
-	make quality_pycodestyle
-	make quality_pylint
+	tox
 
 clean:  ## Remove all build artifacts
 	deactivate
@@ -28,31 +24,20 @@ destroy:  ## Destroy the vagrant box and cleanup the directory
 
 imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	@echo "$< -> $@"
-	lessc $< $@
+	node_modules/less/bin/lessc $< $@
 
 quality:  ## Run all quality checks
-	make quality_csslint
-	make quality_eslint
-	make quality_pycodestyle
-	make quality_pylint
+	tox -e csslint -e eslint -e pycodestyle -e pylint
 
-quality_csslint: $(css_files)  ## Run the csslint checks
-	csslint imagemodal/
+quality_static: $(css_files)  ## Run the csslint checks
+	tox -e csslint eslint
 
-quality_eslint:  ## Run the eslint checks
-	eslint imagemodal/public/view.js
-
-quality_pycodestyle:  ## Run the pycodestyle checks
-	tox -e pycodestyle
-
-quality_pylint:  ## Run the pylint checks
-	tox -e pylint
+quality_python:  ## Run the pycodestyle/pylint checks
+	tox -e pycodestyle -e pylint
 
 requirements:  # Install required packages
 	pip install tox
-	npm install -g eslint
-	npm install -g less
-	npm install -g csslint
+	npm install
 
 run:  ## Run the workbench server w/ this XBlock installed
 	vagrant up

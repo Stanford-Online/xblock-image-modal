@@ -19,8 +19,11 @@
   "scripts": {
     "test": "tox"
   },
-  "devDependencies": {
-  },
+  "devDependencies": [
+    "eslint",
+    "less",
+    "csslint"
+  ],
   "keywords": [
     "stanford",
     "openedx",
