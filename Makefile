@@ -8,7 +8,7 @@ help:  ## This.
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 all:  ## Run all quality checks and unit tests
-	tox -p all
+	tox -e ALL
 
 clean:  ## Remove all build artifacts
 	deactivate

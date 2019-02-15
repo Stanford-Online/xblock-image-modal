@@ -16,6 +16,7 @@ script2 = <<'SCRIPT'
 test -d sdk || git clone https://github.com/edx/xblock-sdk.git sdk
 test -d venv || virtualenv venv
 . venv/bin/activate
+pip install 'pip<10'
 pip install tox
 pip install -e ./sdk/
 sed -i.bak "s/'[_a-z]\+ *= *sample_xblocks\.\(basic\.\(problem\|content\|slider\)\|.*thumbs\)/\# &/g" sdk/setup.py
