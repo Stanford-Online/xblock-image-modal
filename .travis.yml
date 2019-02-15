@@ -1,8 +1,24 @@
-language: node_js
-node_js:
-    - "0.11"
-    - "0.10"
+addons:
+  apt:
+    packages:
+    - nodejs
+language: python
+sudo: false
+python:
+  - "2.7"
 before_install:
-    - npm install -g grunt-cli
+  - "pip install -U pip"
+  - export BOTO_CONFIG=/dev/null
+cache:
+    directories:
+        - $HOME/.cache/pip
 install:
-    - npm install
+  - "pip install tox"
+  - "npm install -g eslint"
+  - "npm install -g less"
+  - "npm install -g csslint"
+script:
+  - make all
+branches:
+    only:
+      - master
