@@ -1,4 +1,4 @@
-$script1 = <<SCRIPT
+script1 = <<'SCRIPT'
 apt-get update -y
 apt-get install -y build-essential
 apt-get install -y python-dev python-pip
@@ -12,17 +12,12 @@ npm install -g less
 npm install -g csslint
 SCRIPT
 
-$script3 = <<SCRIPT
-sed -i.bak "s/'[_a-z]\+ *= *sample_xblocks\.\(basic\.\(problem\|content\|slider\)\|.*thumbs\)/\# &/g" sdk/setup.py
-SCRIPT
-
-$script2 = <<SCRIPT
+script2 = <<'SCRIPT'
 test -d sdk || git clone https://github.com/edx/xblock-sdk.git sdk
 test -d venv || virtualenv venv
 . venv/bin/activate
 pip install tox
 pip install -e ./
-cd sdk/
 sed -i.bak "s/'[_a-z]\+ *= *sample_xblocks\.\(basic\.\(problem\|content\|slider\)\|.*thumbs\)/\# &/g" sdk/setup.py
 sed -i.bak 's/.*acid-block\.git/# &/g' sdk/requirements/dev.txt
 pip install -e ./sdk/
@@ -36,6 +31,7 @@ Vagrant.configure('2') do |config|
   config.vm.box     = 'ubuntu/xenial64'
   config.ssh.insert_key = true
   config.vm.synced_folder  ".", "/home/vagrant/xblock", disabled: false
-  config.vm.provision 'shell', inline: "echo $script3 >&1"
+  config.vm.provision 'shell', inline: script1, privileged: true
+  config.vm.provision 'shell', inline: script2, privileged: false
   config.vm.network :forwarded_port, guest: 8000, host: 8000
 end
