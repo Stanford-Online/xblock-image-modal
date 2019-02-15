@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 function ImageModalView(runtime, element) {
+    /* eslint-enable no-unused-vars */
     'use strict';
 
     var $ = window.jQuery;
@@ -109,7 +111,7 @@ function ImageModalView(runtime, element) {
         return false;
     }
 
-    function openModal(event) {
+    function openModal() {
         curtain.show();
         body.css('overflow', 'hidden');
         body.on('keyup.imagemodal', function (event) {
