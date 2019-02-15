@@ -27,7 +27,9 @@ rules:
      - callback
      - next
   class-methods-use-this: error
-  comma-dangle: error
+  comma-dangle:
+    - error
+    - always
   comma-spacing: error
   comma-style:
     - error
@@ -261,7 +263,7 @@ rules:
       - '-'
   strict:
     - error
-    - global
+    - function
   switch-colon-spacing: error
   symbol-description: error
   template-curly-spacing:

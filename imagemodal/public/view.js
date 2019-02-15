@@ -1,4 +1,3 @@
-'use strict';
 /* eslint-disable no-unused-vars */
 /**
  * Initialize the ImageModal student view
@@ -8,6 +7,7 @@
  */
 function ImageModalView(runtime, element) {
     /* eslint-enable no-unused-vars */
+    'use strict';
 
     var $ = window.jQuery;
     var $element = $(element);
@@ -61,7 +61,7 @@ function ImageModalView(runtime, element) {
         draggie = draggie || new Draggabilly(
             image[0],
             {
-                containment: true
+                containment: true,
             }
         );
 
@@ -70,11 +70,11 @@ function ImageModalView(runtime, element) {
                 left: -maskLeft,
                 top: -maskTop,
                 width: maskWidth,
-                height: maskHeight
+                height: maskHeight,
             });
             image.css({
                 top: maskTop / 2,
-                left: maskLeft / 2
+                left: maskLeft / 2,
             });
             draggie.enable();
         } else {
@@ -112,11 +112,11 @@ function ImageModalView(runtime, element) {
             left: 0,
             top: 0,
             width: '100%',
-            height: '100%'
+            height: '100%',
         });
         image.css({
             left: 0,
-            top: 0
+            top: 0,
         });
         if (draggie) {
             draggie.disable();
