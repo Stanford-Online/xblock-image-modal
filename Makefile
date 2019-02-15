@@ -11,7 +11,7 @@ all:  ## Run all quality checks and unit tests
 	tox -e ALL
 
 clean:  ## Remove all build artifacts
-	deactivate
+	deactivate || true
 	rm -rf venv/
 	rm -rf .tox/
 	find . -name '*.pyc'
@@ -26,15 +26,6 @@ imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 
-quality:  ## Run all quality checks
-	tox -p all -e csslint -e eslint -e pycodestyle -e pylint
-
-quality_static: $(css_files)  ## Run the csslint checks
-	tox -e csslint eslint
-
-quality_python:  ## Run the pycodestyle/pylint checks
-	tox -p all -e pycodestyle -e pylint
-
 requirements:  # Install required packages
 	pip install tox
 	npm install
@@ -44,4 +35,5 @@ run:  ## Run the workbench server w/ this XBlock installed
 	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
 
 test:  ## Run the library test suite
-	tox -e py27
+	vagrant up
+	vagrant ssh -c 'cd /home/vagrant/xblock && /home/vagrant/venv/bin/tox -e ALL'
