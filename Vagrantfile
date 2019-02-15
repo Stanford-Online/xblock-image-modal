@@ -28,7 +28,6 @@ cd sdk && python ./manage.py migrate
 SCRIPT
 
 Vagrant.configure('2') do |config|
-  # Creates an edX devstack VM from an official release
   config.vm.box     = 'ubuntu/xenial64'
   config.ssh.insert_key = true
   config.vm.synced_folder  ".", "/home/vagrant/xblock", disabled: false
