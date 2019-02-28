@@ -7,11 +7,9 @@ help:  ## This.
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-all:  ## Run all quality checks and unit tests
-	tox -e ALL
-
 clean:  ## Remove all build artifacts
 	deactivate || true
+	vagrant halt || true
 	rm -rf venv/
 	rm -rf .tox/
 	find . -name '*.pyc'
@@ -19,8 +17,8 @@ clean:  ## Remove all build artifacts
 	rm -rf .eggs/
 	rm -rf reports/
 
-destroy:  ## Destroy the vagrant box and cleanup the directory
-	vagrant destroy -f
+destroy: clean  ## Destroy the vagrant box and cleanup the directory
+	vagrant destroy -f || true
 
 imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
 	@echo "$< -> $@"
@@ -34,6 +32,12 @@ run:  ## Run the workbench server w/ this XBlock installed
 	vagrant up
 	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
 
-test:  ## Run the library test suite
+stop:
+	vagrant halt || true
+
+test: requirements  ## Run all quality checks and unit tests
+	tox -e ALL
+
+test_vagrant:  ## Run the library test suite (in Vagrant)
 	vagrant up
-	vagrant ssh -c 'cd /home/vagrant/xblock && /home/vagrant/venv/bin/tox -e ALL'
+	vagrant ssh -c '. /home/vagrant/venv/bin/activate && make -C /home/vagrant/xblock/ test'
