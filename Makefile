@@ -11,7 +11,6 @@ help:  ## This.
 .PHONY: clean
 clean:  ## Remove build artifacts
 	deactivate || true
-	vagrant halt || true
 	rm -rf venv/
 	rm -rf .tox/
 	find . -name '*.pyc'
@@ -44,7 +43,7 @@ test: requirements  ## Run all quality checks and unit tests
 	tox -e ALL
 
 .PHONY: vagrant_clean
-vagrant_clean: clean  ## Remove build artifacts (and destroy vagrant VM)
+vagrant_clean: vagrant_halt clean  ## Remove build artifacts (and destroy vagrant VM)
 	vagrant destroy -f
 
 .PHONY: vagrant_halt
