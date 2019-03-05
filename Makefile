@@ -7,7 +7,8 @@ help:  ## This.
 	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-clean:  ## Remove all build artifacts
+.PHONY: clean
+clean:  ## Remove build artifacts
 	deactivate || true
 	vagrant halt || true
 	rm -rf venv/
@@ -20,10 +21,13 @@ clean:  ## Remove all build artifacts
 destroy: clean  ## Destroy the vagrant box and cleanup the directory
 	vagrant destroy -f || true
 
-imagemodal/public/%.css: imagemodal/public/%  ## Compile the less->css
+.PHONY: static
+static: $(css_files)  ## Compile the less->css
+imagemodal/public/%.css: imagemodal/public/%
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 
+.PHONY: requirements
 requirements:  # Install required packages
 	pip install tox
 	npm install
@@ -35,6 +39,7 @@ run:  ## Run the workbench server w/ this XBlock installed
 stop:
 	vagrant halt || true
 
+.PHONY: test
 test: requirements  ## Run all quality checks and unit tests
 	tox -e ALL
 
