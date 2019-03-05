@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 css_files := $(patsubst %.less, %.less.css, $(wildcard ./imagemodal/public/*.less))
+sdk_root := ../sdk
 
 .PHONY: help
 help:  ## This.
@@ -18,9 +19,6 @@ clean:  ## Remove build artifacts
 	rm -rf .eggs/
 	rm -rf reports/
 
-destroy: clean  ## Destroy the vagrant box and cleanup the directory
-	vagrant destroy -f || true
-
 .PHONY: static
 static: $(css_files)  ## Compile the less->css
 imagemodal/public/%.css: imagemodal/public/%
@@ -32,17 +30,33 @@ requirements:  # Install required packages
 	pip install tox
 	npm install
 
-run:  ## Run the workbench server w/ this XBlock installed
-	vagrant up
-	vagrant ssh -c 'cd /home/vagrant/sdk/ && /home/vagrant/venv/bin/python ./manage.py runserver 0.0.0.0:8000'
-
-stop:
-	vagrant halt || true
+.PHONY: run
+# This target is intentionally hidden from the help menu,
+# as it shouldn't be invoked directly.
+run:  # Run the workbench server w/ this XBlock installed
+	cd $(sdk_root) && pip install -r requirements/base.txt
+	pip install -e .
+	cd $(sdk_root) && python manage.py migrate
+	cd $(sdk_root) && python manage.py runserver 0.0.0.0:8000
 
 .PHONY: test
 test: requirements  ## Run all quality checks and unit tests
 	tox -e ALL
 
-test_vagrant:  ## Run the library test suite (in Vagrant)
+.PHONY: vagrant_clean
+vagrant_clean: clean  ## Remove build artifacts (and destroy vagrant VM)
+	vagrant destroy -f
+
+.PHONY: vagrant_halt
+vagrant_halt:  ## Stop running vagrant VM vagrant halt
+	vagrant halt
+
+define run-in-vagrant
 	vagrant up
-	vagrant ssh -c '. /home/vagrant/venv/bin/activate && make -C /home/vagrant/xblock/ test'
+	vagrant ssh -c ". /home/vagrant/venv/bin/activate && make -C /home/vagrant/xblock/ $(patsubst vagrant_%, %, $@)"
+endef
+
+.PHONY: vagrant_run vagrant_static vagrant_test
+vagrant_run: ; $(run-in-vagrant)  ## Run server inside vagrant VM
+vagrant_static: ; $(run-in-vagrant)  ## Compile assets inside vagrant VM
+vagrant_test: ; $(run-in-vagrant)  ## Run tests inside vagrant VM
