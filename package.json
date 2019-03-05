@@ -2,7 +2,7 @@
   "name": "xblock-image-modal",
   "title": "Image Modal XBlock",
   "description": "A fullscreen image modal XBlock.",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "homepage": "https://github.com/Stanford-Online/xblock-image-modal",
   "author": {
     "name": "stv",
