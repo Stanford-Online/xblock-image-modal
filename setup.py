@@ -18,8 +18,9 @@ setup(
         'imagemodal',
     ],
     install_requires=[
+        'Django<2.0.0',
         'XBlock',
-        # xblockutils
+        'xblock-utils',
     ],
     entry_points={
         'xblock.v1': [
@@ -48,4 +49,5 @@ setup(
         'Topic :: Education',
         'Topic :: Internet :: WWW/HTTP',
     ],
+    test_suite='imagemodal.tests',
 )

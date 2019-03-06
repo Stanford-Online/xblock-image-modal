@@ -1,8 +1,36 @@
-language: node_js
-node_js:
-    - "0.11"
-    - "0.10"
+addons:
+  apt:
+    packages:
+    - nodejs
+language: python
+sudo: false
+python:
+  - "2.7"
+matrix:
+  include:
+    - python: 2.7
+      env: TOXENV=csslint
+    - python: 2.7
+      env: TOXENV=eslint
+    - python: 2.7
+      env: TOXENV=py27
+    - python: 2.7
+      env: TOXENV=pycodestyle
+    - python: 2.7
+      env: TOXENV=pylint
 before_install:
-    - npm install -g grunt-cli
+  - "pip install -U pip"
+  - export BOTO_CONFIG=/dev/null
+cache:
+    directories:
+        - $HOME/.cache/pip
 install:
-    - npm install
+  - "make requirements"
+  - "pip install coveralls"
+script:
+  - make test
+branches:
+    only:
+      - master
+after_success:
+  coveralls
