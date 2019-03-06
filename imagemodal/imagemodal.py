@@ -20,6 +20,17 @@ DEFAULT_FIELDS = [
 ]
 
 
+def get_resource_string(path):
+    """
+    Retrieve string contents for the file path
+    """
+    path = os.path.join('public', path)
+    resource_string = pkg_resources.resource_string(__name__, path)
+    return resource_string.decode('utf8')
+
+
+# pylint: disable=too-many-ancestors
+# pylint: disable=too-many-arguments
 class ImageModal(StudioEditableXBlockMixin, XBlock):
     """
     A fullscreen image modal XBlock.
@@ -30,6 +41,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         """
         Gather scenarios to be displayed in the workbench
         """
+        # pylint: disable=no-self-use
+        # pylint: disable=line-too-long
         return [
             ('Image Modal XBlock',
              """<sequence_demo>
@@ -42,6 +55,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 </sequence_demo>
              """),
         ]
+        # pylint: disable=line-too-long
 
     display_name = String(
         display_name=_('Display Name'),
@@ -52,7 +66,12 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
 
     image_url = String(
         display_name=_('Image URL'),
-        default='http://upload.wikimedia.org/wikipedia/commons/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg',
+        default=(
+            'http://upload.wikimedia.org/'
+            'wikipedia/commons/4/48/'
+            '1853_Kaei_6_Japanese_Map_of_the_World_-_'
+            'Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg'
+        ),
         scope=Scope.settings,
         help=_(
             'This is the location of the full-screen image to be displayed.'
@@ -95,6 +114,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         'alt_text',
     ]
 
+    # pylint: disable=unused-argument
     # Decorate the view in order to support multiple devices e.g. mobile
     # See: https://openedx.atlassian.net/wiki/display/MA/Course+Blocks+API
     # section 'View @supports(multi_device) decorator'
@@ -113,7 +133,11 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
                 'view.js',
             ],
             urls_css=[
-                '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css',
+                (
+                    '//netdna.bootstrapcdn.com/'
+                    'font-awesome/3.2.1/css/'
+                    'font-awesome.css'
+                ),
             ],
             fragment_js='ImageModalView',
             context={
@@ -126,14 +150,7 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
             },
         )
         return fragment
-
-    def get_resource_string(self, path):
-        """
-        Retrieve string contents for the file path
-        """
-        path = os.path.join('public', path)
-        resource_string = pkg_resources.resource_string(__name__, path)
-        return resource_string.decode('utf8')
+    # pylint: enable=unused-argument
 
     def get_resource_url(self, path):
         """
@@ -143,25 +160,31 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         resource_url = self.runtime.local_resource_url(self, path)
         return resource_url
 
-    def build_fragment(self,
-        path_html='',
-        paths_css=[],
-        paths_js=[],
-        urls_css=[],
-        urls_js=[],
-        fragment_js=None,
-        context=None,
+    def build_fragment(
+            self,
+            path_html='',
+            paths_css=None,
+            paths_js=None,
+            urls_css=None,
+            urls_js=None,
+            fragment_js=None,
+            context=None,
     ):
         """
         Assemble the HTML, JS, and CSS for an XBlock fragment
         """
+        paths_css = paths_css or []
+        paths_js = paths_js or []
+        urls_css = urls_css or []
+        urls_js = urls_js or []
         # If no context is provided, convert self.fields into a dict
         context = context or {
+            # pylint: disable=not-an-iterable
             key: getattr(self, key)
-                for key in self.fields
-                    if key not in DEFAULT_FIELDS
+            for key in self.fields
+            if key not in DEFAULT_FIELDS
         }
-        html_source = self.get_resource_string(path_html)
+        html_source = get_resource_string(path_html)
         html_source = html_source.format(
             **context
         )
@@ -179,3 +202,5 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         if fragment_js:
             fragment.initialize_js(fragment_js)
         return fragment
+# pylint: enable=too-many-arguments
+# pylint: enable=too-many-ancestors
