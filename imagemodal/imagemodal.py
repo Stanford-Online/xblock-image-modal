@@ -36,6 +36,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
     A fullscreen image modal XBlock.
     """
 
+    show_in_read_only_mode = True
+
     @staticmethod
     def workbench_scenarios():
         """
