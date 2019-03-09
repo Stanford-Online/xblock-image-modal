@@ -30,7 +30,8 @@ def make_an_xblock(**kwargs):
     xblock.xmodule_runtime = runtime
     return xblock
 
-class TestPass(unittest.TestCase):
+
+class TestRender(unittest.TestCase):
 
     def setUp(self):
         try:
@@ -39,9 +40,6 @@ class TestPass(unittest.TestCase):
         except RuntimeError:
             pass
         self.xblock = make_an_xblock()
-
-    def test_pass(self):
-        pass
 
     def test_render(self):
         student_view = self.xblock.student_view()
