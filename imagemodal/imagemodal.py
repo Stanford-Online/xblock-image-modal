@@ -1,37 +1,30 @@
 """
 This is the core logic for the Image Modal XBlock
 """
-import os
-
-import pkg_resources
-
 from django.utils.translation import ugettext_lazy as _
-
 from xblock.core import XBlock
 from xblock.fields import Scope
 from xblock.fields import String
-from xblock.fragment import Fragment
-
+from xblockutils.resources import ResourceLoader
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
-DEFAULT_FIELDS = [
-    'parent',
-    'tags',
-]
+from .mixins.fragment import XBlockFragmentBuilderMixin
 
-
-def get_resource_string(path):
-    """
-    Retrieve string contents for the file path
-    """
-    path = os.path.join('public', path)
-    resource_string = pkg_resources.resource_string(__name__, path)
-    return resource_string.decode('utf8')
+URL_FONT_AWESOME_CSS = '/'.join([
+    '//netdna.bootstrapcdn.com'
+    'font-awesome/3.2.1/css'
+    'font-awesome.css'
+])
 
 
 # pylint: disable=too-many-ancestors
 # pylint: disable=too-many-arguments
-class ImageModal(StudioEditableXBlockMixin, XBlock):
+@XBlock.needs('i18n')
+class ImageModal(
+        XBlockFragmentBuilderMixin,
+        StudioEditableXBlockMixin,
+        XBlock,
+):
     """
     A fullscreen image modal XBlock.
     """
@@ -71,6 +64,8 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
              """),
         ]
         # pylint: disable=line-too-long
+
+    loader = ResourceLoader(__name__)
 
     display_name = String(
         display_name=_('Display Name'),
@@ -129,93 +124,33 @@ class ImageModal(StudioEditableXBlockMixin, XBlock):
         'alt_text',
     ]
 
-    # pylint: disable=unused-argument
-    # Decorate the view in order to support multiple devices e.g. mobile
-    # See: https://openedx.atlassian.net/wiki/display/MA/Course+Blocks+API
-    # section 'View @supports(multi_device) decorator'
     @XBlock.supports('multi_device')
     def student_view(self, context=None):
         """
         Build the fragment for the default student view
         """
+        context = context or {}
+        context.update({
+            'display_name': self.display_name,
+            'image_url': self.image_url,
+            'thumbnail_url': self.thumbnail_url or self.image_url,
+            'description': self.description,
+            'xblock_id': unicode(self.scope_ids.usage_id),
+            'alt_text': self.alt_text or self.display_name,
+        })
         fragment = self.build_fragment(
-            path_html='view.html',
-            paths_css=[
+            template='view.html',
+            context=context,
+            css=[
                 'view.less.css',
+                URL_FONT_AWESOME_CSS,
             ],
-            paths_js=[
+            js=[
                 'draggabilly.pkgd.js',
                 'view.js',
             ],
-            urls_css=[
-                (
-                    '//netdna.bootstrapcdn.com/'
-                    'font-awesome/3.2.1/css/'
-                    'font-awesome.css'
-                ),
-            ],
-            fragment_js='ImageModalView',
-            context={
-                'display_name': self.display_name,
-                'image_url': self.image_url,
-                'thumbnail_url': self.thumbnail_url or self.image_url,
-                'description': self.description,
-                'xblock_id': unicode(self.scope_ids.usage_id),
-                'alt_text': self.alt_text or self.display_name,
-            },
+            js_init='ImageModalView',
         )
-        return fragment
-    # pylint: enable=unused-argument
-
-    def get_resource_url(self, path):
-        """
-        Retrieve a public URL for the file path
-        """
-        path = os.path.join('public', path)
-        resource_url = self.runtime.local_resource_url(self, path)
-        return resource_url
-
-    def build_fragment(
-            self,
-            path_html='',
-            paths_css=None,
-            paths_js=None,
-            urls_css=None,
-            urls_js=None,
-            fragment_js=None,
-            context=None,
-    ):
-        """
-        Assemble the HTML, JS, and CSS for an XBlock fragment
-        """
-        paths_css = paths_css or []
-        paths_js = paths_js or []
-        urls_css = urls_css or []
-        urls_js = urls_js or []
-        # If no context is provided, convert self.fields into a dict
-        context = context or {
-            # pylint: disable=not-an-iterable
-            key: getattr(self, key)
-            for key in self.fields
-            if key not in DEFAULT_FIELDS
-        }
-        html_source = get_resource_string(path_html)
-        html_source = html_source.format(
-            **context
-        )
-        fragment = Fragment(html_source)
-        for path in paths_css:
-            url = self.get_resource_url(path)
-            fragment.add_css_url(url)
-        for path in paths_js:
-            url = self.get_resource_url(path)
-            fragment.add_javascript_url(url)
-        for url in urls_css:
-            fragment.add_css_url(url)
-        for url in urls_js:
-            fragment.add_javascript_url(url)
-        if fragment_js:
-            fragment.initialize_js(fragment_js)
         return fragment
 # pylint: enable=too-many-arguments
 # pylint: enable=too-many-ancestors
