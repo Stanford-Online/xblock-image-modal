@@ -9,6 +9,7 @@ from xblockutils.resources import ResourceLoader
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 from .mixins.fragment import XBlockFragmentBuilderMixin
+from .mixins.scenario import ImageModalScenarioMixin
 
 URL_FONT_AWESOME_CSS = '/'.join([
     '//netdna.bootstrapcdn.com'
@@ -21,6 +22,7 @@ URL_FONT_AWESOME_CSS = '/'.join([
 # pylint: disable=too-many-arguments
 @XBlock.needs('i18n')
 class ImageModal(
+        ImageModalScenarioMixin,
         XBlockFragmentBuilderMixin,
         StudioEditableXBlockMixin,
         XBlock,
@@ -28,42 +30,6 @@ class ImageModal(
     """
     A fullscreen image modal XBlock.
     """
-
-    @staticmethod
-    def workbench_scenarios():
-        """
-        Gather scenarios to be displayed in the workbench
-        """
-        # pylint: disable=no-self-use
-        # pylint: disable=line-too-long
-        return [
-            ('Image Modal XBlock, single',
-             """<sequence_demo>
-                    <imagemodal
-                        display_name="Image Modal With Thumbnail"
-                        thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
-                        description="Put screenreader text here"
-                    />
-                </sequence_demo>
-             """),
-            ('Image Modal XBlock, multiple',
-             """<sequence_demo>
-                    <vertical_demo>
-                        <imagemodal
-                            display_name="Image Modal With Thumbnail"
-                            thumbnail_url="http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg/640px-1853_Kaei_6_Japanese_Map_of_the_World_-_Geographicus_-_ChikyuBankokuHozu-nakajima-1853.jpg"
-                            description="Put screenreader text here"
-                        />
-                        <imagemodal description="Write stuff here" />
-                    </vertical_demo>
-                    <vertical_demo>
-                        <imagemodal description="Write stuff here" />
-                        <imagemodal description="Write more here" />
-                    </vertical_demo>
-                </sequence_demo>
-             """),
-        ]
-        # pylint: disable=line-too-long
 
     loader = ResourceLoader(__name__)
 
