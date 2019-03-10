@@ -4,8 +4,6 @@ Test basic XBlock display function
 """
 import unittest
 
-import django
-from django.conf import settings
 from mock import Mock
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from xblock.field_data import DictFieldData
@@ -38,11 +36,6 @@ class TestRender(unittest.TestCase):
     """
 
     def setUp(self):
-        try:
-            settings.configure()
-            django.setup()
-        except RuntimeError:
-            pass
         self.xblock = make_an_xblock()
 
     def test_render(self):
