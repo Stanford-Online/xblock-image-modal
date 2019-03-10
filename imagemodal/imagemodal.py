@@ -18,8 +18,6 @@ URL_FONT_AWESOME_CSS = '/'.join([
 ])
 
 
-# pylint: disable=too-many-ancestors
-# pylint: disable=too-many-arguments
 @XBlock.needs('i18n')
 class ImageModal(
         ImageModalScenarioMixin,
@@ -118,5 +116,3 @@ class ImageModal(
             js_init='ImageModalView',
         )
         return fragment
-# pylint: enable=too-many-arguments
-# pylint: enable=too-many-ancestors

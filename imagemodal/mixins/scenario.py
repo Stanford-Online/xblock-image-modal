@@ -3,7 +3,6 @@ Mixin workbench behavior into XBlocks
 """
 
 
-# pylint: disable=too-few-public-methods
 class ImageModalScenarioMixin(object):
     """
     Provide a default test workbench for the XBlock
@@ -14,8 +13,6 @@ class ImageModalScenarioMixin(object):
         """
         Gather scenarios to be displayed in the workbench
         """
-        # pylint: disable=no-self-use
-        # pylint: disable=line-too-long
         return [
             ('Image Modal XBlock, single',
              """<sequence_demo>
@@ -43,5 +40,3 @@ class ImageModalScenarioMixin(object):
                 </sequence_demo>
              """),
         ]
-        # pylint: disable=line-too-long
-# pylint: enable=too-few-public-methods

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-# pylint: disable=missing-docstring,invalid-name,unused-import
+"""
+Test basic XBlock display function
+"""
 import unittest
 
 import django
@@ -8,7 +10,6 @@ from mock import Mock
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from xblock.field_data import DictFieldData
 
-import imagemodal
 from imagemodal import ImageModal
 
 
@@ -32,6 +33,9 @@ def make_an_xblock(**kwargs):
 
 
 class TestRender(unittest.TestCase):
+    """
+    Test the HTML rendering of the XBlock
+    """
 
     def setUp(self):
         try:

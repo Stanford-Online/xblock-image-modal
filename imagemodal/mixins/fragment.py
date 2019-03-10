@@ -5,7 +5,6 @@ from django.template.context import Context
 from xblock.fragment import Fragment
 
 
-# pylint: disable=too-few-public-methods
 class XBlockFragmentBuilderMixin(object):
     """
     Create a default XBlock fragment builder
@@ -19,7 +18,6 @@ class XBlockFragmentBuilderMixin(object):
             js=None,
             js_init=None,
     ):
-        #  pylint: disable=dangerous-default-value, too-many-arguments
         """
         Creates a fragment for display.
         """
@@ -49,4 +47,3 @@ class XBlockFragmentBuilderMixin(object):
         if js_init:
             fragment.initialize_js(js_init)
         return fragment
-# pylint: enable=too-few-public-methods
