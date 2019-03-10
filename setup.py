@@ -26,7 +26,7 @@ setup(
     ],
     entry_points={
         'xblock.v1': [
-            'imagemodal = imagemodal:ImageModal',
+            'imagemodal = imagemodal.xblocks:ImageModal',
         ],
     },
     package_dir={
