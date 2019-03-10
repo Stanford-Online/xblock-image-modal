@@ -8,9 +8,10 @@ DATABASES = {
         # 'NAME': 'intentionally-omitted',
     },
 }
-
 INSTALLED_APPS = (
     'imagemodal',
 )
-
+LOCALE_PATHS = [
+    'imagemodal/locale',
+]
 SECRET_KEY = 'SECRET_KEY'
