@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 css_files := $(patsubst %.less, %.less.css, $(wildcard ./imagemodal/public/*.less))
 sdk_root := ../sdk
+test_suite :=
 
 .PHONY: help
 help:  ## This.
@@ -40,7 +41,7 @@ run:  # Run the workbench server w/ this XBlock installed
 
 .PHONY: test
 test: requirements  ## Run all quality checks and unit tests
-	tox
+	tox -p all $(test_suite)
 
 .PHONY: vagrant_clean
 vagrant_clean: vagrant_halt clean  ## Remove build artifacts (and destroy vagrant VM)

@@ -4,9 +4,6 @@ Mixin workbench behavior into XBlocks
 from glob import glob
 import pkg_resources
 
-from xblock.core import XBlock
-
-
 
 def _read_file(file_path):
     with open(file_path) as file_input:

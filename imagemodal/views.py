@@ -11,8 +11,9 @@ URL_FONT_AWESOME_CSS = '/'.join([
 
 class ImageModalView(object):
 
-    loader = ResourceLoader(__name__)
+    _loader = ResourceLoader(__name__)
 
+    # pylint: disable=no-member
     @XBlock.supports('multi_device')
     def student_view(self, context=None):
         """
@@ -30,7 +31,8 @@ class ImageModalView(object):
         fragment = self.build_fragment(
             template='view.html',
             context=context,
-            css=[ 'view.less.css',
+            css=[
+                'view.less.css',
                 URL_FONT_AWESOME_CSS,
             ],
             js=[
@@ -40,3 +42,4 @@ class ImageModalView(object):
             js_init='ImageModalView',
         )
         return fragment
+    # pylint: enable=no-member
