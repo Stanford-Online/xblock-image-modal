@@ -2,6 +2,7 @@
 Mixin workbench behavior into XBlocks
 """
 from glob import glob
+import pkg_resources
 
 from xblock.core import XBlock
 
@@ -44,7 +45,7 @@ def _find_files(directory):
     return files
 
 
-class ImageModalScenarioMixin(object):
+class XBlockWorkbenchMixin(object):
     """
     Provide a default test workbench for the XBlock
     """
@@ -54,9 +55,10 @@ class ImageModalScenarioMixin(object):
         """
         Gather scenarios to be displayed in the workbench
         """
-        resource_dir = cls.get_resources_dir()
-        resource_dir = resource_dir or '.'
-        scenario_dir = resource_dir + '/scenarios'
-        files = _find_files(scenario_dir)
+        module = cls.__module__
+        module = module.split('.')[0]
+        directory = pkg_resources.resource_filename(module, '.')
+        directory = directory + '/scenarios'
+        files = _find_files(directory)
         scenarios = _read_files(files)
         return scenarios

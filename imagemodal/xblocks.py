@@ -5,7 +5,7 @@ from xblock.core import XBlock
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 from .mixins.fragment import XBlockFragmentBuilderMixin
-from .mixins.scenario import ImageModalScenarioMixin
+from .mixins.scenario import XBlockWorkbenchMixin
 from .models import ImageModalModel
 from .views import ImageModalView
 
@@ -14,7 +14,7 @@ from .views import ImageModalView
 class ImageModal(
         ImageModalModel,
         ImageModalView,
-        ImageModalScenarioMixin,
+        XBlockWorkbenchMixin,
         XBlockFragmentBuilderMixin,
         StudioEditableXBlockMixin,
         XBlock,
