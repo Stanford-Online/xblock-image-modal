@@ -31,6 +31,8 @@ class ImageModal(
 
     loader = ResourceLoader(__name__)
 
+    show_in_read_only_mode = True
+
     display_name = String(
         display_name=_('Display Name'),
         default='Image Modal XBlock',
