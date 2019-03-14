@@ -1,6 +1,18 @@
 #!/usr/bin/make -f
-css_files := $(patsubst %.less, %.less.css, $(wildcard ./imagemodal/public/*.less))
 sdk_root := ../sdk
+module_root := ./imagemodal
+css_files := $(patsubst %.less, %.less.css, $(wildcard ./$(module_root)/public/*.less))
+html_files := $(wildcard ./$(module_root)/templates/*.html)
+js_files := $(wildcard ./$(module_root)/public/*.js)
+files_with_translations := $(js_files) $(html_files)
+translation_root := $(module_root)/translations
+po_files := $(wildcard $(translation_root)/*/LC_MESSAGES/django.po)
+ifneq ($(strip $(language)),)
+    po_files := $(po_files) $(translation_root)/$(language)/LC_MESSAGES/django.po
+endif
+ifeq ($(strip $(po_files)),)
+    po_files = $(translation_root)/en/LC_MESSAGES/django.po
+endif
 
 .PHONY: help
 help:  ## This.
@@ -18,9 +30,21 @@ clean:  ## Remove build artifacts
 	rm -rf .eggs/
 	rm -rf reports/
 
+$(translation_root)/%/LC_MESSAGES/django.po: $(files_with_translations)
+	mkdir -p $(@D)
+	./manage.py makemessages -l $(shell echo $(@) | cut -d'/' -f 3)
+.PHONY: translations
+translations: $(po_files)  ## Update translation files
+	@echo
+	@echo 'Translations updated.'
+	@echo "You can add a new language like this:"
+	@echo '    make $(@) language=fr'
+	@echo 'where `fr` is the language code.'
+	@echo
+
 .PHONY: static
 static: $(css_files)  ## Compile the less->css
-imagemodal/public/%.css: imagemodal/public/%
+$(module_root)/public/%.css: $(module_root)/public/%
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 
@@ -52,10 +76,11 @@ vagrant_halt:  ## Stop running vagrant VM vagrant halt
 
 define run-in-vagrant
 	vagrant up
-	vagrant ssh -c ". /home/vagrant/venv/bin/activate && make -C /home/vagrant/xblock/ $(patsubst vagrant_%, %, $@)"
+	vagrant ssh -c ". /home/vagrant/venv/bin/activate && $(MAKE) language=$(language) -C /home/vagrant/xblock/ $(patsubst vagrant_%, %, $@)"
 endef
 
 .PHONY: vagrant_run vagrant_static vagrant_test
 vagrant_run: ; $(run-in-vagrant)  ## Run server inside vagrant VM
 vagrant_static: ; $(run-in-vagrant)  ## Compile assets inside vagrant VM
 vagrant_test: ; $(run-in-vagrant)  ## Run tests inside vagrant VM
+vagrant_translations: ; $(run-in-vagrant)  ## Update translations inside vagrant VM
