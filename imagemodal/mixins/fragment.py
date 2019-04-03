@@ -1,6 +1,7 @@
 """
 Mixin fragment/html behavior into XBlocks
 """
+from __future__ import absolute_import
 from django.template.context import Context
 from xblock.fragment import Fragment
 

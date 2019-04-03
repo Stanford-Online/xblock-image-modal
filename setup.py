@@ -21,6 +21,7 @@ setup(
         'Django<2.0.0',
         'edx-opaque-keys',
         'mock',
+        'six',
         'XBlock',
         'xblock-utils',
     ],

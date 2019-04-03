@@ -1,6 +1,7 @@
 """
 This is the core logic for the Image Modal XBlock
 """
+from __future__ import absolute_import
 from xblock.core import XBlock
 
 from .mixins.scenario import ImageModalScenarioMixin
@@ -18,4 +19,3 @@ class ImageModal(
     """
     A fullscreen image modal XBlock.
     """
-    pass
