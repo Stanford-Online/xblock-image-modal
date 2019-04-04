@@ -4,20 +4,24 @@ addons:
     - nodejs
 language: python
 sudo: false
-python:
-  - "2.7"
 matrix:
   include:
-    - python: 2.7
+    - python: 3.5
       env: TOXENV=csslint
-    - python: 2.7
+    - python: 3.5
       env: TOXENV=eslint
-    - python: 2.7
-      env: TOXENV=py27
+    - python: 3.5
+      env: TOXENV=pycodestyle
+    - python: 3.5
+      env: TOXENV=pylint
+    - python: 3.5
+      env: TOXENV=python
     - python: 2.7
       env: TOXENV=pycodestyle
     - python: 2.7
       env: TOXENV=pylint
+    - python: 2.7
+      env: TOXENV=python
 before_install:
   - "pip install -U pip"
   - export BOTO_CONFIG=/dev/null

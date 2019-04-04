@@ -1,6 +1,8 @@
 """
 Handle view logic for the Image Modal XBlock
 """
+from __future__ import absolute_import
+from six import text_type
 from xblock.core import XBlock
 from xblockutils.resources import ResourceLoader
 from xblockutils.studio_editable import StudioEditableXBlockMixin
@@ -32,7 +34,7 @@ class ImageModalViewMixin(
             'image_url': self.image_url,
             'thumbnail_url': self.thumbnail_url or self.image_url,
             'description': self.description,
-            'xblock_id': unicode(self.scope_ids.usage_id),
+            'xblock_id': text_type(self.scope_ids.usage_id),
             'alt_text': self.alt_text or self.display_name,
         })
         fragment = self.build_fragment(
