@@ -25,6 +25,8 @@ access your `Advanced Module List`:
 
     Settings -> Advanced Settings -> Advanced Module List
 
+.. image:: ./docs/settings-menu.png
+
 and add the following:
 
     imagemodal
