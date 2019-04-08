@@ -35,12 +35,6 @@ and add the following:
 
     imagemodal
 
-like:
-
-    [
-        "imagemodal"
-    ]
-
 .. image:: ./docs/advanced-module-list.png
 
 
