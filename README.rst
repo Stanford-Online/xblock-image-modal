@@ -44,6 +44,7 @@ Usage, Course Staff
 -------------------
 
 Using the Studio editor, you can edit the following fields:
+
 - display name
 - image URL
 - thumbnail URL
