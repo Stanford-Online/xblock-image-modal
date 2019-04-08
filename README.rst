@@ -32,7 +32,6 @@ and add the following:
     imagemodal
 
 like:
-
     [
         "imagemodal"
     ]
