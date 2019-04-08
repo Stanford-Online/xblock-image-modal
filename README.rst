@@ -4,7 +4,8 @@ A fullscreen image modal XBlock.
 
 This package is meant to be installed within the OpenEdX platform.
 
-.. image:: ./docs/studio-view.png
+.. image:: ./docs/lms-view-normal.png
+.. image:: ./docs/lms-view-zoom.png
 
 
 Installation, system administrator
@@ -45,6 +46,8 @@ like:
 
 Usage, Course Staff
 -------------------
+
+.. image:: ./docs/studio-view.png
 
 Using the Studio editor, you can edit the following fields:
 
