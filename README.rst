@@ -38,3 +38,17 @@ like:
     ]
 
 .. image:: ./docs/advanced-module-list.png
+
+
+Usage, Course Staff
+-------------------
+
+Using the Studio editor, you can edit the following fields:
+- display name
+- image URL
+- thumbnail URL
+- description
+- alt text
+
+.. image:: ./docs/studio-editor-1.png
+.. image:: ./docs/studio-editor-2.png
