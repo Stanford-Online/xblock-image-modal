@@ -4,6 +4,9 @@ A fullscreen image modal XBlock.
 
 This package is meant to be installed within the OpenEdX platform.
 
+.. image:: ./docs/studio-view.png
+
+
 Installation, system administrator
 ----------------------------------
 
