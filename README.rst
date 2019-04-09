@@ -5,7 +5,6 @@ A fullscreen image modal XBlock.
 This package is meant to be installed within the OpenEdX platform.
 
 .. image:: ./docs/lms-view-normal.png
-.. image:: ./docs/lms-view-zoom.png
 
 
 Installation, system administrator
@@ -38,8 +37,8 @@ and add the following:
 .. image:: ./docs/advanced-module-list.png
 
 
-Usage, Course Staff
--------------------
+Use, Course Staff
+-----------------
 
 .. image:: ./docs/studio-view.png
 
@@ -47,9 +46,23 @@ Using the Studio editor, you can edit the following fields:
 
 - display name
 - image URL
-- thumbnail URL
-- description
-- alt text
+- thumbnail URL (defaults to image URL, if not specified)
+- description (useful for screen readers)
+- alt text (usef for screen readers)
 
 .. image:: ./docs/studio-editor-1.png
 .. image:: ./docs/studio-editor-2.png
+
+
+Use, Participants
+-----------------
+
+.. image:: ./docs/lms-view-normal.png
+
+Click on the image to zoom in full screen.
+
+.. image:: ./docs/lms-view-zoom.png
+
+Click on the image again to zoom out.
+
+Click and drag to pan around.
