@@ -1,5 +1,4 @@
 #!/usr/bin/make -f
-sdk_root := ../sdk
 module_root := ./imagemodal
 css_files := $(patsubst %.less, %.less.css, $(wildcard ./$(module_root)/public/*.less))
 html_files := $(wildcard ./$(module_root)/templates/*.html)
@@ -17,8 +16,11 @@ endif
 .PHONY: help
 help:  ## This.
 	@perl -ne 'print if /^[a-zA-Z_-]+:.*## .*$$/' $(MAKEFILE_LIST) \
-	| sort \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: runserver
+runserver: build_docker  ## Run server inside XBlock Workbench container
+	$(docker_run) $(_NAME)
 
 .PHONY: clean
 clean:  ## Remove build artifacts
@@ -29,6 +31,22 @@ clean:  ## Remove build artifacts
 	rm -rf *.egg-info/
 	rm -rf .eggs/
 	rm -rf reports/
+
+.PHONY: requirements
+requirements:  # Install required packages
+	pip install tox==3.7.0
+	npm install
+	pip install -e .
+
+.PHONY: static
+static: $(css_files)  ## Compile the less->css
+$(module_root)/public/%.css: $(module_root)/public/%
+	@echo "$< -> $@"
+	node_modules/less/bin/lessc $< $@
+
+.PHONY: test
+test:  ## Run all quality checks and unit tests
+	tox -p all
 
 $(translation_root)/%/LC_MESSAGES/django.po: $(files_with_translations)
 	mkdir -p $(@D)
@@ -42,45 +60,25 @@ translations: $(po_files)  ## Update translation files
 	@echo 'where `fr` is the language code.'
 	@echo
 
-.PHONY: static
-static: $(css_files)  ## Compile the less->css
-$(module_root)/public/%.css: $(module_root)/public/%
-	@echo "$< -> $@"
-	node_modules/less/bin/lessc $< $@
+_NAME=image-modal:latest
+_VOLUME=-v '$(PWD):/root/xblock'
+_PORT=
+runserver: _PORT = -p 8000:8000
+docker_test: _VOLUME = -v '$(PWD)/reports:/root/xblock/reports'
+docker_run=docker run $(_PORT) $(_VOLUME) --rm -it
+docker_make=$(docker_run) --entrypoint make $(_NAME)
+docker_make_args=language=$(language) -C /root/xblock
+docker_make_more=$(docker_make) $(docker_make_args)
 
-.PHONY: requirements
-requirements:  # Install required packages
-	pip install tox
-	npm install
-
-.PHONY: run
-# This target is intentionally hidden from the help menu,
-# as it shouldn't be invoked directly.
-run:  # Run the workbench server w/ this XBlock installed
-	cd $(sdk_root) && pip install -r requirements/base.txt
-	pip install -e .
-	cd $(sdk_root) && python manage.py migrate
-	cd $(sdk_root) && python manage.py runserver 0.0.0.0:8000
-
-.PHONY: test
-test: requirements  ## Run all quality checks and unit tests
-	tox
-
-.PHONY: vagrant_clean
-vagrant_clean: vagrant_halt clean  ## Remove build artifacts (and destroy vagrant VM)
-	vagrant destroy -f
-
-.PHONY: vagrant_halt
-vagrant_halt:  ## Stop running vagrant VM vagrant halt
-	vagrant halt
-
-define run-in-vagrant
-	vagrant up
-	vagrant ssh -c ". /home/vagrant/venv/bin/activate && $(MAKE) language=$(language) -C /home/vagrant/xblock/ $(patsubst vagrant_%, %, $@)"
+.PHONY: build_docker
+build_docker:
+	docker build -t $(_NAME) .
+.PHONY: docker_static docker_test docker_translations
+define run-in-docker
+$(docker_make_more) $(patsubst docker_%, %, $@)
 endef
-
-.PHONY: vagrant_run vagrant_static vagrant_test
-vagrant_run: ; $(run-in-vagrant)  ## Run server inside vagrant VM
-vagrant_static: ; $(run-in-vagrant)  ## Compile assets inside vagrant VM
-vagrant_test: ; $(run-in-vagrant)  ## Run tests inside vagrant VM
-vagrant_translations: ; $(run-in-vagrant)  ## Update translations inside vagrant VM
+docker_shell:
+	$(docker_run) --entrypoint /bin/bash $(_NAME)
+docker_static: ; make build_docker; $(run-in-docker)  ## Compile static assets in docker container
+docker_translations: ; make build_docker; $(run-in-docker)  ## Update translation files in docker container
+docker_test: ; make build_docker; $(run-in-docker)  ## Run tests in docker container
