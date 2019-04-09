@@ -66,3 +66,5 @@ Click on the image to zoom in full screen.
 Click on the image again to zoom out.
 
 Click and drag to pan around.
+
+.. image:: ./docs/use.gif
