@@ -39,6 +39,7 @@ setup(
         ],
         "imagemodal": [
             'public/*',
+            'scenarios/*.xml',
             'templates/*',
         ],
     },
