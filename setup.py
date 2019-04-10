@@ -1,18 +1,20 @@
 import json
+from os import path
 from setuptools import setup
 
 
-package_json_file = open('imagemodal/package.json', 'r')
-package_json = json.load(package_json_file)
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.rst')) as file_in:
+    long_description = file_in.read()
 
 setup(
-    name=package_json.get('name', 'xblock-test'),
-    version=package_json.get('version', '0.1.0'),
-    description=package_json.get('description'),
-    long_description=package_json.get('description'),
-    author=package_json.get('author', {}).get('name'),
-    author_email=package_json.get('author', {}).get('email'),
-    url=package_json.get('homepage'),
+    name='xblock-image-modal',
+    version='0.5.0',
+    description='A full-screen image modal XBlock',
+    long_description=long_description,
+    author='stv',
+    author_email='stv@stanford.edu',
+    url='https://github.com/Stanford-Online/xblock-image-modal',
     license='AGPL-3.0',
     packages=[
         'imagemodal',
@@ -34,9 +36,6 @@ setup(
         'imagemodal': 'imagemodal',
     },
     package_data={
-        '': [
-            'package.json',
-        ],
         "imagemodal": [
             'public/*',
             'scenarios/*.xml',
