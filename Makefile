@@ -24,13 +24,12 @@ runserver: build_docker  ## Run server inside XBlock Workbench container
 
 .PHONY: clean
 clean:  ## Remove build artifacts
-	deactivate || true
-	rm -rf venv/
+	coverage erase
 	rm -rf .tox/
-	find . -name '*.pyc'
 	rm -rf *.egg-info/
 	rm -rf .eggs/
-	rm -rf reports/
+	rm -rf package-lock.json
+	find . -name '*.pyc' -delete
 
 .PHONY: requirements
 requirements:  # Install required packages
