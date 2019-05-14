@@ -15,13 +15,13 @@ matrix:
     - python: 3.6
       env: TOXENV=pylint
     - python: 3.6
-      env: TOXENV=python
+      env: TOXENV=py36
     - python: 2.7
       env: TOXENV=pycodestyle
     - python: 2.7
       env: TOXENV=pylint
     - python: 2.7
-      env: TOXENV=python
+      env: TOXENV=py27
 before_install:
   - "pip install -U pip"
   - export BOTO_CONFIG=/dev/null
