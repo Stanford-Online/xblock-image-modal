@@ -25,11 +25,14 @@ runserver: build_docker  ## Run server inside XBlock Workbench container
 .PHONY: clean
 clean:  ## Remove build artifacts
 	coverage erase
+	rm -rf reports/cover
 	rm -rf .tox/
 	rm -rf *.egg-info/
 	rm -rf .eggs/
 	rm -rf package-lock.json
+	rm -rf node_modules/
 	find . -name '*.pyc' -delete
+	find . -name __pycache__ -delete
 
 .PHONY: requirements
 requirements:  # Install required packages
