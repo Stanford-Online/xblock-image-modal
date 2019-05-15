@@ -1,12 +1,3 @@
----
-name: Pull Request Template
-about: Create a reasonable, default PR template
-title: ''
-labels: ''
-assignees: ''
-
----
-
 # Overview
 What do we need to know about this change?
 
