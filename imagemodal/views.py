@@ -45,7 +45,7 @@ class ImageModalViewMixin(
                 URL_FONT_AWESOME_CSS,
             ],
             js=[
-                'draggabilly.pkgd.js',
+                'draggabilly.pkgd.min.js',
                 'view.js',
             ],
             js_init='ImageModalView',

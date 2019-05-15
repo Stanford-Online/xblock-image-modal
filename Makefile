@@ -39,6 +39,7 @@ requirements:  # Install required packages
 	pip install tox==3.7.0
 	npm install
 	pip install -e .
+	cp node_modules/draggabilly/dist/draggabilly.pkgd.min.js $(module_root)/public/
 
 .PHONY: static
 static: $(css_files)  ## Compile the less->css
