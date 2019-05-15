@@ -3,6 +3,7 @@
     "test": "tox"
   },
   "devDependencies": [
+    "draggabilly==1.2.4",
     "eslint",
     "less",
     "csslint"
