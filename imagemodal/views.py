@@ -1,5 +1,5 @@
 """
-Handle view logic for the Image Modal XBlock
+Handle view logic for the XBlock
 """
 from __future__ import absolute_import
 from six import text_type

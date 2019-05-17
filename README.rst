@@ -1,5 +1,6 @@
 Image Modal XBlock
 ==================
+
 A full-screen image modal XBlock,
 for use within the OpenEdX platform.
 
@@ -15,8 +16,12 @@ the full-size version of the image.
 |image-lms-view-normal|
 
 
-Installation, system administrator
-----------------------------------
+Installation
+------------
+
+
+System Administrator
+~~~~~~~~~~~~~~~~~~~~
 
 To install the XBlock on your platform,
 add the following to your `requirements.txt` file:
@@ -28,8 +33,8 @@ You'll also need to add this to your `INSTALLED_APPS`:
     imagemodal
 
 
-Installation, course staff
---------------------------
+Course Staff
+~~~~~~~~~~~~
 
 To install the XBlock in your course,
 access your `Advanced Module List`:
@@ -45,8 +50,12 @@ and add the following:
 |image-cms-advanced-module-list|
 
 
-Use, Course Staff
------------------
+Use
+---
+
+
+Course Staff
+~~~~~~~~~~~~
 
 To add a full-screen image to your course:
 
@@ -77,8 +86,8 @@ Using the Studio editor, you can edit the following fields:
 |image-cms-editor-2|
 
 
-Use, Participants
------------------
+Participants
+~~~~~~~~~~~~
 
 |image-lms-view-normal|
 
