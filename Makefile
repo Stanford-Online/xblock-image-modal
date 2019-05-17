@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 module_root := ./imagemodal
-css_files := $(patsubst %.less, %.less.css, $(wildcard ./$(module_root)/public/*.less))
+css_files := $(patsubst %.less, %.css, $(wildcard ./$(module_root)/public/*.less))
 html_files := $(wildcard ./$(module_root)/templates/*.html)
 js_files := $(wildcard ./$(module_root)/public/*.js)
 files_with_translations := $(js_files) $(html_files)
@@ -43,7 +43,7 @@ requirements:  # Install required packages
 
 .PHONY: static
 static: $(css_files)  ## Compile the less->css
-$(module_root)/public/%.css: $(module_root)/public/%
+$(module_root)/public/%.css: $(module_root)/public/%.less
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 

@@ -41,7 +41,7 @@ class ImageModalViewMixin(
             template='view.html',
             context=context,
             css=[
-                'view.less.css',
+                'view.css',
                 URL_FONT_AWESOME_CSS,
             ],
             js=[
