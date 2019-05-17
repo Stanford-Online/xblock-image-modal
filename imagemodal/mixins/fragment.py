@@ -22,12 +22,12 @@ class XBlockFragmentBuilderMixin(object):
         """
         Creates a fragment for display.
         """
-        template = 'templates/' + template
         context = context or {}
         css = css or []
         js = js or []
         rendered_template = ''
         if template:
+            template = 'templates/' + template
             rendered_template = self.loader.render_django_template(
                 template,
                 context=Context(context),
