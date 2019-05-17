@@ -3,7 +3,6 @@ Handle view logic for the XBlock
 """
 from __future__ import absolute_import
 from six import text_type
-from xblock.core import XBlock
 from xblockutils.resources import ResourceLoader
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
@@ -22,13 +21,22 @@ class ImageModalViewMixin(
     """
 
     loader = ResourceLoader(__name__)
+    static_css = [
+        URL_FONT_AWESOME_CSS,
+        'view.css',
+    ]
+    static_js = [
+        'draggabilly.pkgd.min.js',
+        'view.js',
+    ]
+    static_js_init = 'ImageModalView'
 
-    @XBlock.supports('multi_device')
-    def student_view(self, context=None):
+    def provide_context(self, context=None):
         """
-        Build the fragment for the default student view
+        Build a context dictionary to render the student view
         """
         context = context or {}
+        context = dict(context)
         context.update({
             'display_name': self.display_name,
             'image_url': self.image_url,
@@ -37,17 +45,4 @@ class ImageModalViewMixin(
             'xblock_id': text_type(self.scope_ids.usage_id),
             'alt_text': self.alt_text or self.display_name,
         })
-        fragment = self.build_fragment(
-            template='view.html',
-            context=context,
-            css=[
-                'view.css',
-                URL_FONT_AWESOME_CSS,
-            ],
-            js=[
-                'draggabilly.pkgd.min.js',
-                'view.js',
-            ],
-            js_init='ImageModalView',
-        )
-        return fragment
+        return context
