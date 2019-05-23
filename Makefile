@@ -24,7 +24,7 @@ runserver: build_docker  ## Run server inside XBlock Workbench container
 
 .PHONY: clean
 clean:  ## Remove build artifacts
-	coverage erase
+	tox -e clean
 	rm -rf reports/cover
 	rm -rf .tox/
 	rm -rf *.egg-info/
