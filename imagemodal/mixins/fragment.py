@@ -1,5 +1,8 @@
 """
 Mixin fragment/html behavior into XBlocks
+
+Note: We should resume test coverage for all lines in this file once
+split into its own library.
 """
 from __future__ import absolute_import
 
@@ -21,7 +24,7 @@ class XBlockFragmentBuilderMixin(object):
     static_js_init = None
     template = 'view.html'
 
-    def provide_context(self, context):
+    def provide_context(self, context):  # pragma: no cover
         """
         Build a context dictionary to render the student view
 
@@ -65,7 +68,7 @@ class XBlockFragmentBuilderMixin(object):
         css = css or []
         js = js or []
         rendered_template = ''
-        if template:
+        if template:  # pragma: no cover
             template = 'templates/' + template
             rendered_template = self.loader.render_django_template(
                 template,
@@ -84,6 +87,6 @@ class XBlockFragmentBuilderMixin(object):
             item = 'public/' + item
             url = self.runtime.local_resource_url(self, item)
             fragment.add_javascript_url(url)
-        if js_init:
+        if js_init:  # pragma: no cover
             fragment.initialize_js(js_init)
         return fragment
