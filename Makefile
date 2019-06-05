@@ -37,18 +37,20 @@ clean:  ## Remove build artifacts
 .PHONY: requirements
 requirements:  # Install required packages
 	pip install tox==3.7.0
+
+.PHONY: requirements_js
+requirements_js:  # Install required packages
 	npm install
-	pip install -e .
 	cp node_modules/draggabilly/dist/draggabilly.pkgd.min.js $(module_root)/public/
 
 .PHONY: static
-static: $(css_files)  ## Compile the less->css
+static: requirements_js $(css_files)  ## Compile the less->css
 $(module_root)/public/%.css: $(module_root)/public/%.less
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 
 .PHONY: test
-test:  ## Run all quality checks and unit tests
+test: requirements requirements_js  ## Run all quality checks and unit tests
 	tox -p all
 
 $(translation_root)/%/LC_MESSAGES/django.po: $(files_with_translations)
