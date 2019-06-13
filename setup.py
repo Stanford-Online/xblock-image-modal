@@ -1,7 +1,6 @@
 """
 A full-screen image modal XBlock
 """
-import json
 from os import path
 from setuptools import setup
 

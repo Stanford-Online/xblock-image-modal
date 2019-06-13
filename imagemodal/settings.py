@@ -1,5 +1,5 @@
 """
-Stub Settings for imagemodal xblock
+Stub settings for xblock
 """
 
 DATABASES = {

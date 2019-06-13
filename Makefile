@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 module_root := ./imagemodal
-css_files := $(patsubst %.less, %.less.css, $(wildcard ./$(module_root)/public/*.less))
+css_files := $(patsubst %.less, %.css, $(wildcard ./$(module_root)/public/*.less))
 html_files := $(wildcard ./$(module_root)/templates/*.html)
 js_files := $(wildcard ./$(module_root)/public/*.js)
 files_with_translations := $(js_files) $(html_files)
@@ -24,7 +24,7 @@ runserver: build_docker  ## Run server inside XBlock Workbench container
 
 .PHONY: clean
 clean:  ## Remove build artifacts
-	coverage erase
+	tox -e clean
 	rm -rf reports/cover
 	rm -rf .tox/
 	rm -rf *.egg-info/
@@ -37,18 +37,20 @@ clean:  ## Remove build artifacts
 .PHONY: requirements
 requirements:  # Install required packages
 	pip install tox==3.7.0
+
+.PHONY: requirements_js
+requirements_js:  # Install required packages
 	npm install
-	pip install -e .
 	cp node_modules/draggabilly/dist/draggabilly.pkgd.min.js $(module_root)/public/
 
 .PHONY: static
-static: $(css_files)  ## Compile the less->css
-$(module_root)/public/%.css: $(module_root)/public/%
+static: requirements_js $(css_files)  ## Compile the less->css
+$(module_root)/public/%.css: $(module_root)/public/%.less
 	@echo "$< -> $@"
 	node_modules/less/bin/lessc $< $@
 
 .PHONY: test
-test:  ## Run all quality checks and unit tests
+test: requirements requirements_js  ## Run all quality checks and unit tests
 	tox -p all
 
 $(translation_root)/%/LC_MESSAGES/django.po: $(files_with_translations)

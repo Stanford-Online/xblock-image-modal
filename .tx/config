@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[xblocks.image-modal]
+[stanford-openedx-xblocks.image-modal]
 file_filter = imagemodal/translations/<lang>/LC_MESSAGES/django.po
 source_file = imagemodal/translations/en/LC_MESSAGES/django.po
 source_lang = en

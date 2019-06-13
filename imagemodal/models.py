@@ -1,5 +1,5 @@
 """
-Handle data access logic for the Image Modal XBlock
+Handle data access logic for the XBlock
 """
 from __future__ import absolute_import
 from django.utils.translation import ugettext_lazy as _
