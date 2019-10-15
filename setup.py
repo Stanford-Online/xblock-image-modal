@@ -44,6 +44,7 @@ setup(
             'public/*',
             'scenarios/*.xml',
             'templates/*',
+            'translations/*/*/*',
         ],
     },
     classifiers=[
