@@ -41,6 +41,7 @@ setup(
     },
     package_data={
         "imagemodal": [
+            'mixins/*.py',
             'public/*',
             'scenarios/*.xml',
             'templates/*',
